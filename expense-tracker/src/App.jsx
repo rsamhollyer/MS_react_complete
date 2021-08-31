@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import ExpenseList from './components/ExpenseList/ExpenseList';
 
 export default function App() {
