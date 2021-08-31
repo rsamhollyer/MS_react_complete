@@ -1,6 +1,6 @@
 import React from 'react';
-import convertDate from '../utils/convertDate';
 import './ExpenseDate.css';
+import convertDate from '../../utils/convertDate';
 
 export default function ExpenseDate({ date }) {
   const [month, day, year] = convertDate(date);

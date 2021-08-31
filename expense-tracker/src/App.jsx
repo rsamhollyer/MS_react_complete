@@ -1,8 +1,8 @@
 import React from 'react';
-import ExpenseItem from './components/ExpenseItem';
 import './App.css';
+import ExpenseList from './components/ExpenseList/ExpenseList';
 
-function App() {
+export default function App() {
   const expenses = [
     {
       id: 'e1',
@@ -32,13 +32,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {expenses &&
-          expenses.map(({ id, title, amount, date }) => (
-            <ExpenseItem key={id} title={title} date={date} amount={amount} />
-          ))}
+        <ExpenseList expenses={expenses} />
       </header>
     </div>
   );
 }
-
-export default App;
