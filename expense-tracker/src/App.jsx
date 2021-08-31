@@ -29,6 +29,7 @@ export default function App() {
       date: new Date(2021, 5, 12),
     },
   ];
+
   return (
     <div className="App">
       <header className="App-header">
@@ -37,3 +38,14 @@ export default function App() {
     </div>
   );
 }
+/* Older React - What JSX looks like under the hood
+return React.createElement(
+  'div',
+  { class: 'App' },
+  React.createElement(
+    'header',
+    { class: 'App-header' },
+    React.createElement(ExpenseList, { expenses })
+  )
+);
+*/
