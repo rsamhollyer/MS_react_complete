@@ -1,5 +1,6 @@
 import React from 'react';
 import ExpenseList from './components/ExpenseList/ExpenseList';
+import NewExpense from './components/NewExpense/NewExpense';
 
 export default function App() {
   const expenses = [
@@ -32,6 +33,7 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <NewExpense />
         <ExpenseList expenses={expenses} />
       </header>
     </div>
