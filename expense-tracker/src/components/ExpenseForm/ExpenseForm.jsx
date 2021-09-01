@@ -3,8 +3,9 @@ import DateInput from './DateInput';
 import './expenseForm.css';
 import NumberInput from './NumberInput';
 import TextInput from './TextInput';
+import ToggleForm from './ToggleForm';
 
-export default function ExpenseForm({ onSaveExpenseData }) {
+export default function ExpenseForm({ onSaveExpenseData, onCancel }) {
   const [textInput, setTextInput] = useState('');
   const [dateInput, setDateInput] = useState('');
   const [numberInput, setNumberInput] = useState('');
@@ -53,7 +54,17 @@ export default function ExpenseForm({ onSaveExpenseData }) {
           setInputValue={setDateInput}
         />
       </div>
+
       <div className="new-expense__actions">
+        <button
+          type="button"
+          onClick={() => {
+            onCancel(false);
+            clearForm();
+          }}
+        >
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
