@@ -11,6 +11,10 @@ export default function ExpenseList({ expenses }) {
     setFilteredYear(selectedYear);
   };
 
+  const filteredExpenses = expenses.filter(
+    ({ date }) => date.getFullYear() === parseInt(filteredYear)
+  );
+
   return (
     <div>
       <Card className="expenses">
@@ -18,8 +22,8 @@ export default function ExpenseList({ expenses }) {
           filteredYear={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-        {expenses &&
-          expenses.map(({ id, title, amount, date }) => (
+        {filteredExpenses.length > 0 &&
+          filteredExpenses.map(({ id, title, amount, date }) => (
             <ExpenseItem key={id} title={title} date={date} amount={amount} />
           ))}
       </Card>
