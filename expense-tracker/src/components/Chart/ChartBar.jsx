@@ -3,10 +3,11 @@ import './styles/Chartbar.css';
 
 export default function ChartBar({ value, maxValue, label }) {
   const valueRatio = () => {
-    const fillHeight = `${Math.round((value / maxValue) * 100)}%` || '0%';
-    return fillHeight;
+    if (maxValue === 0) {
+      return '0%';
+    }
+    return `${Math.round((value / maxValue) * 100)}%`;
   };
-
   return (
     <div className="chart-bar">
       <div className="chart-bar__inner">

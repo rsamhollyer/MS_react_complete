@@ -21,7 +21,7 @@ export default function ExpenseForm({ onSaveExpenseData, onCancel }) {
 
     const expenseData = {
       title: textInput,
-      amount: numberInput,
+      amount: parseFloat(numberInput),
       date: new Date(dateInput),
     };
     onSaveExpenseData(expenseData);
