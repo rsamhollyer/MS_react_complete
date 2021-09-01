@@ -3,6 +3,10 @@ import ExpenseList from './components/ExpenseList/ExpenseList';
 import NewExpense from './components/NewExpense/NewExpense';
 
 export default function App() {
+  const addExpenseHandler = expense => {
+    console.log(expense);
+  };
+
   const expenses = [
     {
       id: 'e1',
@@ -33,7 +37,7 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <NewExpense />
+        <NewExpense onAddExpense={addExpenseHandler} />
         <ExpenseList expenses={expenses} />
       </header>
     </div>
