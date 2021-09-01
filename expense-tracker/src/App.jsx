@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ExpenseList from './components/ExpenseList/ExpenseList';
+import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
 import dummyExpenses from './utils/initialData';
 
@@ -14,7 +14,7 @@ export default function App() {
     <div className="App">
       <header className="App-header">
         <NewExpense onAddExpense={addExpenseHandler} />
-        <ExpenseList expenses={expenses} />
+        <Expenses expenses={expenses} />
       </header>
     </div>
   );
@@ -26,7 +26,7 @@ return React.createElement(
   React.createElement(
     'header',
     { class: 'App-header' },
-    React.createElement(ExpenseList, { expenses })
+    React.createElement(Expenses, { expenses })
   )
 );
 */

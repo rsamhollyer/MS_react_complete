@@ -11,7 +11,7 @@ export default function ExpenseItem({ title, amount, date }) {
   };
 
   return (
-    <>
+    <li>
       <Card className="expense-item">
         {date && <ExpenseDate date={date} />}
         <div className="expense-item__description">
@@ -22,6 +22,6 @@ export default function ExpenseItem({ title, amount, date }) {
           Change Title
         </button>
       </Card>
-    </>
+    </li>
   );
 }

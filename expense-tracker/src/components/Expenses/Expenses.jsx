@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Card from '../Card/Card';
 import ExpensesFilter from '../ExpenseFilter/ExpenseFilter';
-import ExpenseItem from '../ExpenseItem/ExpenseItem';
-import './ExpenseList.css';
+import ExpensesList from '../ExpensesList/ExpensesList';
+import './Expenses.css';
 
-export default function ExpenseList({ expenses }) {
+export default function Expenses({ expenses }) {
   const [filteredYear, setFilteredYear] = useState('2020');
 
   const filterChangeHandler = selectedYear => {
@@ -15,19 +15,6 @@ export default function ExpenseList({ expenses }) {
     ({ date }) => date.getFullYear() === parseInt(filteredYear)
   );
 
-  const renderContent = () =>
-    // Check for filtered array length
-
-    filteredExpenses.length > 0 ? (
-      // If it has content, return the JSX component
-      filteredExpenses.map(({ id, title, amount, date }) => (
-        <ExpenseItem key={id} title={title} date={date} amount={amount} />
-      ))
-    ) : (
-      // If not just return a JSX p tag
-      <p>No Expenses Found</p>
-    );
-
   return (
     <div>
       <Card className="expenses">
@@ -35,7 +22,7 @@ export default function ExpenseList({ expenses }) {
           filteredYear={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-        {renderContent()}
+        <ExpensesList filteredExpenses={filteredExpenses} />
       </Card>
     </div>
   );
