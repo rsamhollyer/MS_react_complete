@@ -15,6 +15,19 @@ export default function ExpenseList({ expenses }) {
     ({ date }) => date.getFullYear() === parseInt(filteredYear)
   );
 
+  const renderContent = () =>
+    // Check for filtered array length
+
+    filteredExpenses.length > 0 ? (
+      // If it has content, return the JSX component
+      filteredExpenses.map(({ id, title, amount, date }) => (
+        <ExpenseItem key={id} title={title} date={date} amount={amount} />
+      ))
+    ) : (
+      // If not just return a JSX p tag
+      <p>No Expenses Found</p>
+    );
+
   return (
     <div>
       <Card className="expenses">
@@ -22,10 +35,7 @@ export default function ExpenseList({ expenses }) {
           filteredYear={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-        {filteredExpenses.length > 0 &&
-          filteredExpenses.map(({ id, title, amount, date }) => (
-            <ExpenseItem key={id} title={title} date={date} amount={amount} />
-          ))}
+        {renderContent()}
       </Card>
     </div>
   );
