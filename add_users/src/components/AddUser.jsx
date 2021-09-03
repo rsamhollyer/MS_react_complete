@@ -5,10 +5,21 @@ import Card from './Card';
 
 export default function AddUser() {
   const [userName, setUserName] = useState('');
-  const [userAge, setUserAge] = useState(null);
+  const [userAge, setUserAge] = useState('');
 
   const submitHandler = e => {
     e.preventDefault();
+
+    if (userName.trim().length === 0 || userAge.trim().length === 0) {
+      return;
+    }
+
+    if (parseInt(userAge) < 1) {
+      return;
+    }
+
+    setUserName('');
+    setUserAge('');
   };
 
   const nameChangeHandler = e => {
