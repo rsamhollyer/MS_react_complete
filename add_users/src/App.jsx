@@ -3,7 +3,7 @@ import AddUser from './components/AddUser';
 import UsersList from './components/UsersList';
 import './App.css';
 
-function App() {
+export default function App() {
   const [users, setUsers] = useState([]);
 
   const addUserHandler = (name, age) => {
@@ -14,13 +14,9 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <AddUser onAddUser={addUserHandler} />
-        <UsersList users={users} />
-      </header>
-    </div>
+    <main className="App-header">
+      <AddUser onAddUser={addUserHandler} />
+      <UsersList users={users} />
+    </main>
   );
 }
-
-export default App;
