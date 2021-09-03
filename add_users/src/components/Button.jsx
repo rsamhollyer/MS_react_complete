@@ -1,28 +1,16 @@
+/* eslint-disable react/button-has-type */
 import React from 'react';
-import styled from 'styled-components';
 
-export default function Button({ type, children, onClick }) {
-  return (
-    <ButtonStyles onClick={onClick} type={type || 'button'}>
-      {children}
-    </ButtonStyles>
-  );
-}
+import classes from './styles/Button.module.css';
 
-const ButtonStyles = styled.button`
-  font: inherit;
-  border: 1px solid #4f005f;
-  background: #4f005f;
-  color: white;
-  padding: 0.25rem 1rem;
-  cursor: pointer;
+const Button = props => (
+  <button
+    className={classes.button}
+    type={props.type || 'button'}
+    onClick={props.onClick}
+  >
+    {props.children}
+  </button>
+);
 
-  &:hover,
-  &:active {
-    background: #741188;
-    border-color: #741188;
-  }
-  &:focus {
-    outline: none;
-  }
-`;
+export default Button;
