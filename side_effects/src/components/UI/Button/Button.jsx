@@ -2,17 +2,22 @@ import React from 'react';
 
 import classes from './Button.module.css';
 
-const Button = (props) => {
+export default function Button({
+  type,
+  onClick,
+  disabled,
+  className,
+  children,
+}) {
   return (
     <button
-      type={props.type || 'button'}
-      className={`${classes.button} ${props.className}`}
-      onClick={props.onClick}
-      disabled={props.disabled}
+      // eslint-disable-next-line react/button-has-type
+      type={type || 'button'}
+      className={`${classes.button} ${className}`}
+      onClick={onClick}
+      disabled={disabled}
     >
-      {props.children}
+      {children}
     </button>
   );
-};
-
-export default Button;
+}

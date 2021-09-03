@@ -1,29 +1,28 @@
 import React from 'react';
+import Button from '../UI/Button/Button';
 
 import classes from './Navigation.module.css';
 
-const Navigation = (props) => {
+export default function Navigation({ isLoggedIn, onLogout }) {
   return (
     <nav className={classes.nav}>
       <ul>
-        {props.isLoggedIn && (
+        {isLoggedIn && (
           <li>
             <a href="/">Users</a>
           </li>
         )}
-        {props.isLoggedIn && (
+        {isLoggedIn && (
           <li>
             <a href="/">Admin</a>
           </li>
         )}
-        {props.isLoggedIn && (
+        {isLoggedIn && (
           <li>
-            <button onClick={props.onLogout}>Logout</button>
+            <Button onClick={onLogout}>Logout</Button>
           </li>
         )}
       </ul>
     </nav>
   );
-};
-
-export default Navigation;
+}

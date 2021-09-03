@@ -27,7 +27,6 @@ export default function Login({ onLogin }) {
 
   useEffect(() => {
     const identifier = setTimeout(() => {
-      console.log('VALIDITY');
       setFormIsValid(emailIsValid && passwordIsValid);
     }, 400);
 
