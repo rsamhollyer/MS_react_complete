@@ -6,8 +6,18 @@ import classes from './styles/ErrorModal.module.css';
 import useKeyPress from './hooks/useKeyPress';
 
 function BackDrop({ onConfirm }) {
+  const keyPress = useKeyPress(['Escape'], () => {
+    onConfirm();
+  });
   return (
-    <div className={classes.backdrop} onClick={onConfirm} role="presentation" />
+    <div
+      className={classes.backdrop}
+      onClick={onConfirm}
+      onKeyDown={keyPress}
+      role="button"
+      tabIndex={0}
+      aria-label="Close Modal With Escape"
+    />
   );
 }
 
@@ -34,9 +44,6 @@ The createPortal function allows us to control the actual DOM layout of particul
 
 */
 export default function ErrorModal({ onConfirm, title, message }) {
-  useKeyPress(['Escape', 'ArrowDown'], () => {
-    onConfirm();
-  });
   return (
     <>
       {createPortal(
