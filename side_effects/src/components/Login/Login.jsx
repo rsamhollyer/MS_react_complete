@@ -1,16 +1,14 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 import emailReducer from '../reducers/emailReducer';
 import passwordReducer from '../reducers/passwordReducer';
+import AuthContext from '../context/auth-context';
 
-export default function Login({ onLogin }) {
-  // const [enteredEmail, setEnteredEmail] = useState('');
-  // const [emailIsValid, setEmailIsValid] = useState();
-  // const [enteredPassword, setEnteredPassword] = useState('');
-  // const [passwordIsValid, setPasswordIsValid] = useState();
+export default function Login() {
+  const authContext = useContext(AuthContext);
   const [formIsValid, setFormIsValid] = useState(false);
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
@@ -43,7 +41,6 @@ export default function Login({ onLogin }) {
   const passwordChangeHandler = event => {
     const { value } = event.target;
     dispatchPassword({ type: 'USER_INPUT', payload: { value } });
-    // setFormIsValid(value.trim().length >= 6 && emailState.isValid);
   };
 
   const validateEmailHandler = () => {
@@ -56,7 +53,7 @@ export default function Login({ onLogin }) {
 
   const submitHandler = event => {
     event.preventDefault();
-    onLogin(emailState.value, passwordState.value);
+    authContext.onLogin(emailState.value, passwordState.value);
   };
 
   return (
