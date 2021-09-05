@@ -13,9 +13,16 @@ export default function useKeyPress(keyObject) {
     const keyPress = e => {
       const keyListenersMap = new Map(keyArray);
       const listener = keyListenersMap.get(e.key);
+
       return listener && listener(e);
+      /*
+      If the Map returns a value from e.key then we want to call the listener passing it the event.
+      This is equiivalent to writing :
+      if(listener) return listener(e);
+      */
     };
-    window.addEventListener('keyup', keyPress);
-    return () => window.removeEventListener('keyup', keyPress);
+
+    document.addEventListener('keyup', keyPress);
+    return () => document.removeEventListener('keyup', keyPress);
   }, [keyArray]);
 }
