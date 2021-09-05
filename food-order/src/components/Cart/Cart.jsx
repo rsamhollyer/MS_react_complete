@@ -13,6 +13,7 @@ export default function Cart({ items = [{ name: 'food' }], onClose }) {
       </div>
       <div className={classes.actions}>
         <button
+          title="close modal"
           onClick={onClose}
           type="button"
           className={classes['button--alt']}

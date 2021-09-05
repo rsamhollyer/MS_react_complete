@@ -6,6 +6,7 @@ import classes from './Modal.module.css';
 const portal = document.querySelector('#overlays');
 
 export default function Modal({ children, onClose }) {
+  useKeyPress({ Escape: onClose });
   return (
     <>
       {createPortal(<Backdrop onClose={onClose} />, portal)}
@@ -21,19 +22,6 @@ function ModalOverlay({ children }) {
     </div>
   );
 }
-function Backdrop({ onClose }) {
-  const keyPress = useKeyPress(['Escape'], () => {
-    onClose();
-  });
-
-  return (
-    <div
-      className={classes.backdrop}
-      onClick={onClose}
-      onKeyDown={keyPress}
-      role="button"
-      tabIndex={0}
-      aria-label="Close Modal With Escape"
-    />
-  );
+function Backdrop() {
+  return <div className={classes.backdrop} />;
 }

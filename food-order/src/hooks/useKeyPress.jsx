@@ -1,16 +1,21 @@
 import { useEffect } from 'react';
 /**
  * useKeyPress
- * @param {Array.<String>} keyArray - the name(s) of the key(s) to respond to, compared against event.key
- * @param {Function} callback - the action to perform on key press
+ * @param {Object} keyObject - Keystroke is the key press you want to run the function you pass as the value.
+ * For example {"Escape" : someHandler}
+ *
+ * @param {Function} keyObject.keystroke
+ *
  */
-export default function useKeyPress(keyArray, callback) {
+export default function useKeyPress(keyObject) {
+  const keyArray = Object.entries(keyObject);
   useEffect(() => {
-    const onKeyup = e => {
-      if (keyArray.includes(e.key)) callback();
+    const keyPress = e => {
+      const keyListenersMap = new Map(keyArray);
+      const listener = keyListenersMap.get(e.key);
+      return listener && listener(e);
     };
-
-    window.addEventListener('keyup', onKeyup);
-    return () => window.removeEventListener('keyup', onKeyup);
-  }, [keyArray, callback]);
+    window.addEventListener('keyup', keyPress);
+    return () => window.removeEventListener('keyup', keyPress);
+  }, [keyArray]);
 }
