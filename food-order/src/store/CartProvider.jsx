@@ -7,11 +7,11 @@ export default function CartProvider({ children }) {
   const [cartState, dispatchCartAction] = useReducer(cartReducer, initialState);
 
   const addItemToCartHandler = item => {
-    dispatchCartAction({ type: ADD, payload: { item } });
+    dispatchCartAction({ type: ADD, item });
   };
 
   const removeItemToCartHandler = id => {
-    dispatchCartAction({ type: REMOVE, payload: { id } });
+    dispatchCartAction({ type: REMOVE, id });
   };
 
   const cartContext = {

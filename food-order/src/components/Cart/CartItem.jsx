@@ -3,7 +3,6 @@ import classes from './CartItem.module.css';
 
 export default function CartItem({ price, name, amount, onRemove, onAdd }) {
   const adjustedPrice = `$${price.toFixed(2)}`;
-
   return (
     <li className={classes['cart-item']}>
       <div>
