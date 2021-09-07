@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import React from 'react';
+import React, { memo } from 'react';
 
 import classes from './Button.module.css';
 
@@ -14,4 +14,4 @@ const Button = ({ type, onClick, className, disabled, children }) => (
   </button>
 );
 
-export default Button;
+export default memo(Button);
