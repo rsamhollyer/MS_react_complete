@@ -1,17 +1,21 @@
 /* eslint-disable react/button-has-type */
-import React, { memo } from 'react';
+import React from 'react';
 
 import classes from './Button.module.css';
 
-const Button = ({ type, onClick, className, disabled, children }) => (
-  <button
-    type={type || 'button'}
-    className={`${classes.button} ${className}`}
-    onClick={onClick}
-    disabled={disabled}
-  >
-    {children}
-  </button>
-);
+const Button = ({ type, onClick, className, disabled, children }) => {
+  console.log('BUTTON');
 
-export default memo(Button);
+  return (
+    <button
+      type={type || 'button'}
+      className={`${classes.button} ${className}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default Button;
