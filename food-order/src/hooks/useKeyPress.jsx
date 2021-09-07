@@ -8,6 +8,8 @@ import { useEffect } from 'react';
  *
  */
 export default function useKeyPress(keyObject) {
+  // Updated to take in an object parameter, since I find it more a standard when writing code.
+  // The object will be converted to a nested array of keys and functions that the user will pass, so they can have multiple keypresses passed at once.
   const keyArray = Object.entries(keyObject);
   useEffect(() => {
     const keyPress = e => {
