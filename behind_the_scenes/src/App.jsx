@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Button from './components/UI/Button/Button';
-import './App.css';
 import DemoOutput from './components/DemoOutput';
+import './App.css';
 
 function App() {
   const [showPara, setShowPara] = useState(false);
