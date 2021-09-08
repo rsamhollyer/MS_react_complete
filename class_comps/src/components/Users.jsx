@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import User from './User';
 
 import classes from './Users.module.css';
@@ -26,7 +26,7 @@ const Users = () => {
 
   return (
     <div className={classes.users}>
-      <button onClick={toggleUsersHandler}>
+      <button type="button" onClick={toggleUsersHandler}>
         {showUsers ? 'Hide' : 'Show'} Users
       </button>
       {showUsers && usersList}
