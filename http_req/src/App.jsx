@@ -21,14 +21,23 @@ function App() {
       }
 
       const data = await response.json();
+      const loadedMovies = [];
+      Object.keys(data).forEach(key => {
+        loadedMovies.push({
+          id: key,
+          title: data[key].title,
+          openingText: data[key].openingText,
+          releaseDate: data[key].releaseDate,
+        });
+      });
 
-      const transformedMovies = data.results.map(movie => ({
-        id: movie.episode_id,
-        title: movie.title,
-        openingText: movie.opening_crawl,
-        releaseDate: movie.release_date,
-      }));
-      setMovies(transformedMovies);
+      // const transformedMovies = data.results.map(movie => ({
+      //   id: movie.episode_id,
+      //   title: movie.title,
+      //   openingText: movie.opening_crawl,
+      //   releaseDate: movie.release_date,
+      // }));
+      setMovies(loadedMovies);
     } catch (error) {
       setError(error.message);
     }
@@ -40,9 +49,23 @@ function App() {
     return () => {};
   }, [fetchMoviesHandler]);
 
-  const addMovieHandler = movie => {
-    console.log(movie);
+  const addMovieHandler = async movie => {
+    const url = `https://react-http-af080-default-rtdb.firebaseio.com/movies.json`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(movie),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   let content = <p>Found no movies.</p>;
 
   if (movies.length > 0) {
