@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
+import AddMovie from './components/AddMovie';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -12,7 +13,7 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const url = `https://swapi.dev/api/films`;
+      const url = `https://react-http-af080-default-rtdb.firebaseio.com/movies.json`;
       const response = await fetch(url);
 
       if (!response.ok) {
@@ -39,19 +40,33 @@ function App() {
     return () => {};
   }, [fetchMoviesHandler]);
 
+  const addMovieHandler = movie => {
+    console.log(movie);
+  };
+  let content = <p>Found no movies.</p>;
+
+  if (movies.length > 0) {
+    content = <MoviesList movies={movies} />;
+  }
+
+  if (error) {
+    content = <p>{error}</p>;
+  }
+
+  if (isLoading) {
+    content = <p>Loading...</p>;
+  }
   return (
     <>
+      <section>
+        <AddMovie onAddMovie={addMovieHandler} />
+      </section>
       <section>
         <button type="button" onClick={fetchMoviesHandler}>
           Fetch Movies
         </button>
       </section>
-      <section>
-        {!isLoading && movies.length > 0 && <MoviesList movies={movies} />}
-        {!isLoading && error && <p>{error}</p>}
-        {!isLoading && movies.length === 0 && !error && <p>NO MOVIES FOUND</p>}
-        {isLoading && <p>LOADING...</p>}
-      </section>
+      <section>{content}</section>
     </>
   );
 }
