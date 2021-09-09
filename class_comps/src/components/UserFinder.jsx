@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Users from './Users';
 import classes from './UserFinder.module.css';
 import UsersContext from '../store/users-context';
+import ErrorBoundary from './ErrorBoundary.jsx';
 
 class UserFinder extends Component {
   static contextType = UsersContext;
@@ -43,7 +44,9 @@ class UserFinder extends Component {
             onChange={this.searchChangeHandler}
           />
         </div>
-        <Users users={filteredUsers} />
+        <ErrorBoundary>
+          <Users users={filteredUsers} />
+        </ErrorBoundary>
       </>
     );
   }
