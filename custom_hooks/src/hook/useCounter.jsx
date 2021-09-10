@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-
+/**
+ * useCounter
+ *
+ * @return {number} Returns an integer that always increments by 1
+ *
+ *
+ */
 export default function useCounter() {
   const [counter, setCounter] = useState(0);
 
