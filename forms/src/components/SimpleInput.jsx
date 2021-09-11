@@ -2,16 +2,20 @@ import React, { useRef, useState } from 'react';
 
 const SimpleInput = () => {
   const [enteredName, setEnteredName] = useState('');
-  const nameInputRef = useRef();
+  // const nameInputRef = useRef();
   const nameInputHander = e => {
     setEnteredName(e.target.value);
   };
 
   const submitHandler = e => {
     e.preventDefault();
+    if (enteredName.trim() === '') {
+      return;
+    }
+    // const nameValue = nameInputRef.current.value;
 
-    const nameValue = nameInputRef.current.value;
     // nameInputRef.current.value = '' - This is not good practice because you should NOT manipulate the DOM directly
+
     setEnteredName('');
   };
 
@@ -20,7 +24,7 @@ const SimpleInput = () => {
       <div className="form-control">
         <label htmlFor="name">Your Name</label>
         <input
-          ref={nameInputRef}
+          // ref={nameInputRef}
           type="text"
           id="name"
           onChange={nameInputHander}
