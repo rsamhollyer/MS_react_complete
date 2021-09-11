@@ -1,33 +1,33 @@
-import React, { useCallback, useEffect, useState } from 'react';
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+import React, { useEffect, useState } from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
-import useHTTP from './hooks/useHTTP';
+import useHttp from './hooks/useHTTP';
 
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const transformedTasks = useCallback(tasksObject => {
-    const loadedTasks = [];
-
-    Object.keys(tasksObject).forEach(key =>
-      loadedTasks.push({ id: key, text: tasksObject[key].text })
-    );
-
-    setTasks(loadedTasks);
-  }, []);
-
-  const {
-    isLoading,
-    error,
-    sendRequest: fetchTasks,
-  } = useHTTP(transformedTasks);
+  const { isLoading, error, sendRequest: fetchTasks } = useHttp();
 
   useEffect(() => {
-    fetchTasks({
-      url: 'https://react-http-af080-default-rtdb.firebaseio.com/tasks.json',
-    });
-    return () => {};
+    const transformTasks = tasksObj => {
+      const loadedTasks = [];
+
+      for (const taskKey in tasksObj) {
+        loadedTasks.push({ id: taskKey, text: tasksObj[taskKey].text });
+      }
+
+      setTasks(loadedTasks);
+    };
+
+    fetchTasks(
+      {
+        url: 'https://react-http-af080-default-rtdb.firebaseio.com/tasks.json',
+      },
+      transformTasks
+    );
   }, [fetchTasks]);
 
   const taskAddHandler = task => {
