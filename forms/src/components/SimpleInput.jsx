@@ -10,9 +10,18 @@ const SimpleInput = () => {
     setEnteredName(e.target.value);
   };
 
+  const nameBlurHandler = e => {
+    setEnteredNameTouched(true);
+
+    if (enteredName.trim() === '') {
+      setIsNameValid(false);
+    }
+  };
+
   const submitHandler = e => {
     e.preventDefault();
     setEnteredNameTouched(true);
+
     if (enteredName.trim() === '') {
       setIsNameValid(false);
       return;
@@ -40,6 +49,7 @@ const SimpleInput = () => {
           type="text"
           id="name"
           onChange={nameInputHander}
+          onBlur={nameBlurHandler}
           value={enteredName}
         />
         {!isNameValid && enteredNameTouched && (
