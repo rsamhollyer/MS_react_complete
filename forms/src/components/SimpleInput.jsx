@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react';
 
 const SimpleInput = () => {
   const [enteredName, setEnteredName] = useState('');
-  const [isNameValid, setIsNameValid] = useState(true);
+  const [isNameValid, setIsNameValid] = useState(false);
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
   // const nameInputRef = useRef();
   const nameInputHander = e => {
@@ -11,15 +12,16 @@ const SimpleInput = () => {
 
   const submitHandler = e => {
     e.preventDefault();
-
+    setEnteredNameTouched(true);
     if (enteredName.trim() === '') {
       setIsNameValid(false);
       return;
     }
 
-    // const nameValue = nameInputRef.current.value;
+    // const nameValue = nameInputRef.current.value; - This works fine, but I'm using state for now
 
     // nameInputRef.current.value = '' - This is not good practice because you should NOT manipulate the DOM directly
+
     console.log(enteredName);
     setIsNameValid(true);
     setEnteredName('');
@@ -27,7 +29,11 @@ const SimpleInput = () => {
 
   return (
     <form onSubmit={submitHandler}>
-      <div className={`form-control ${!isNameValid && 'invalid'}`}>
+      <div
+        className={`form-control ${
+          !isNameValid && enteredNameTouched && 'invalid'
+        }`}
+      >
         <label htmlFor="name">Your Name</label>
         <input
           // ref={nameInputRef}
@@ -36,7 +42,9 @@ const SimpleInput = () => {
           onChange={nameInputHander}
           value={enteredName}
         />
-        {!isNameValid && <p className="error-text">Name must not be empty</p>}
+        {!isNameValid && enteredNameTouched && (
+          <p className="error-text">Name must not be empty</p>
+        )}
       </div>
       <div className="form-actions">
         <button type="submit">Submit</button>
