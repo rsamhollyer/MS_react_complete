@@ -26,6 +26,11 @@ const SimpleInput = () => {
     setEnteredNameTouched(false);
   };
 
+  let isFormValid = false;
+  if (isNameValid) {
+    isFormValid = true;
+  }
+
   return (
     <form onSubmit={submitHandler}>
       <div
@@ -46,7 +51,9 @@ const SimpleInput = () => {
         )}
       </div>
       <div className="form-actions">
-        <button type="submit">Submit</button>
+        <button disabled={!isFormValid} type="submit">
+          Submit
+        </button>
       </div>
     </form>
   );
