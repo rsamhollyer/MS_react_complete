@@ -1,90 +1,63 @@
-import React, { useState } from 'react';
-import validateEmail from '../utils/validate-email';
+import React from 'react';
+import useInputs from '../hooks/useInputs';
+import { validateEmail } from '../utils/validate-email';
 
 const SimpleInput = () => {
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
-  const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
+  const {
+    value: nameValue,
+    inputHandler: nameHandler,
+    blurHandler: nameBlur,
+    hasError: nameError,
+    isValid: isNameValid,
+    reset: resetName,
+  } = useInputs(value => value.trim() !== '');
 
-  const isNameValid = enteredName.trim() !== '';
-  const isEmailValid = validateEmail(enteredEmail);
-
-  const inputHandler = e => {
-    switch (e.target.id) {
-      case 'name':
-        setEnteredName(e.target.value);
-        break;
-
-      case 'email':
-        setEnteredEmail(e.target.value);
-        break;
-      default:
-    }
-  };
-
-  const blurHandler = e => {
-    switch (e.target.id) {
-      case 'name':
-        setEnteredNameTouched(true);
-        break;
-
-      case 'email':
-        setEnteredEmailTouched(true);
-        break;
-      default:
-    }
-  };
+  const {
+    value: emailValue,
+    inputHandler: emailHandler,
+    blurHandler: emailBlur,
+    hasError: emailError,
+    isValid: isEmailValid,
+    reset: resetEmail,
+  } = useInputs(validateEmail);
 
   const submitHandler = e => {
     e.preventDefault();
-    setEnteredNameTouched(true);
-    setEnteredEmailTouched(true);
+
     if (!isNameValid) {
       return;
     }
-    console.log(enteredName);
-    setEnteredName('');
-    setEnteredEmail('');
-    setEnteredNameTouched(false);
-    setEnteredEmailTouched(false);
+    resetName();
+    resetEmail();
   };
 
   let isFormValid = false;
   if (isNameValid && isEmailValid) {
     isFormValid = true;
   }
-
   return (
     <form onSubmit={submitHandler}>
-      <div
-        className={`form-control ${
-          !isNameValid && enteredNameTouched && 'invalid'
-        }`}
-      >
+      <div className={`form-control ${nameError && 'invalid'}`}>
         <label htmlFor="name">Your Name</label>
         <input
           type="text"
           id="name"
-          onChange={inputHandler}
-          onBlur={blurHandler}
-          value={enteredName}
+          onChange={nameHandler}
+          onBlur={nameBlur}
+          value={nameValue}
         />
-        {!isNameValid && enteredNameTouched && (
-          <p className="error-text">Name must not be empty</p>
-        )}
-
+        {nameError && <p className="error-text">Name must not be empty</p>}
+      </div>
+      <div className={`form-control ${emailError && 'invalid'}`}>
         <label htmlFor="email">Your Email</label>
         <input
           type="email"
           id="email"
-          onChange={inputHandler}
-          onBlur={blurHandler}
-          value={enteredEmail}
+          onChange={emailHandler}
+          onBlur={emailBlur}
+          value={emailValue}
         />
-        {!isEmailValid && enteredEmailTouched && (
-          <p className="error-text">Email must be valid</p>
-        )}
+        {emailError && <p className="error-text">Email must be valid</p>}
       </div>
       <div className="form-actions">
         <button disabled={!isFormValid} type="submit">
@@ -94,4 +67,5 @@ const SimpleInput = () => {
     </form>
   );
 };
+
 export default SimpleInput;
