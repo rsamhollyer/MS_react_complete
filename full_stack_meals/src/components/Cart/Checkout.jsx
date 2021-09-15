@@ -37,6 +37,17 @@ const Checkout = props => {
 
     const formIsValid =
       nameIsValid && streetIsValid && cityIsValid && zipIsValid;
+
+    if (!formIsValid) {
+      return;
+    }
+
+    props.onConfirm({
+      name: enteredName,
+      street: enteredStreet,
+      city: enteredCity,
+      zip: enteredZip,
+    });
   };
 
   const formClasses = bool =>

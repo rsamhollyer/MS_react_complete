@@ -14,7 +14,7 @@ function App() {
   };
 
   const hideCartHandler = () => {
-    document.body.style.overflow = 'scroll';
+    document.body.style.overflow = 'auto';
     setCartIsShown(false);
   };
 
