@@ -9,10 +9,12 @@ function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
 
   const showCartHandler = () => {
+    document.body.style.overflow = 'hidden';
     setCartIsShown(true);
   };
 
   const hideCartHandler = () => {
+    document.body.style.overflow = 'scroll';
     setCartIsShown(false);
   };
 

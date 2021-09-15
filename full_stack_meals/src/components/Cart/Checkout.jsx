@@ -1,37 +1,54 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import classes from './Checkout.module.css';
 
-export default function Checkout({ onCancel }) {
-  const submitHandler = e => {
-    e.preventDefault();
+const Checkout = props => {
+  const nameInputRef = useRef();
+  const streetInputRef = useRef();
+  const zipInputRef = useRef();
+  const cityInputRef = useRef();
+
+  const confirmHandler = event => {
+    event.preventDefault();
+
+    const enteredName = nameInputRef.current.value;
+    const enteredStreet = streetInputRef.current.value;
+    const enteredCity = cityInputRef.current.value;
+    const enteredZip = zipInputRef.current.value;
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form className={classes.form} onSubmit={confirmHandler}>
       <div className={classes.control}>
         <label htmlFor="name">Your Name</label>
-        <input id="name" type="text" />
+        <input type="text" id="name" ref={nameInputRef} />
       </div>
 
       <div className={classes.control}>
         <label htmlFor="street">Street</label>
-        <input id="street" type="text" />
+        <input type="text" id="street" ref={streetInputRef} />
       </div>
 
       <div className={classes.control}>
         <label htmlFor="city">City</label>
-        <input id="city" type="text" />
+        <input type="text" id="city" ref={cityInputRef} />
       </div>
 
       <div className={classes.control}>
-        <label htmlFor="zip">Zip Code</label>
-        <input id="zip" type="text" />
+        <label htmlFor="postal">Postal Code</label>
+        <input type="text" id="postal" ref={zipInputRef} />
       </div>
 
-      <button type="submit">Confirm</button>
-      <button onClick={onCancel} type="button">
-        Cancel
-      </button>
+      <div className={classes.actions}>
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
+
+        <button type="submit" onClick={props.on} className={classes.submit}>
+          Confirm
+        </button>
+      </div>
     </form>
   );
-}
+};
+
+export default Checkout;
