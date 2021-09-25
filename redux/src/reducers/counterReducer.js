@@ -1,6 +1,6 @@
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
-export const DEFAULT = 'DEFAULT';
+const DEFAULT = 'DEFAULT';
 
 const initialState = { counter: 0 };
 
