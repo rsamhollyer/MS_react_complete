@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { counterActions } from '../store';
+import { counterActions } from '../reducers/counterReducer';
 // import { DECREMENT, INCREMENT, TOGGLE } from '../reducers/counterReducer';
 import classes from './Counter.module.css';
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const counter = useSelector(state => state.counter);
-  const showCounter = useSelector(state => state.showCounter);
+  const counter = useSelector(state => state.counter.counter);
+  const showCounter = useSelector(state => state.counter.showCounter);
 
   const toggleCounterHandler = () => {
     // dispatch({ type: TOGGLE });

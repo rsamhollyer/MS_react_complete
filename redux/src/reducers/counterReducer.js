@@ -23,6 +23,7 @@ export const counterSlice = createSlice({
   },
 });
 
+export const counterActions = counterSlice.actions;
 // export const counterReducer = (state = initialState, action) => {
 //   const actions = {
 //     INCREMENT: { ...state, counter: state.counter + action.value },
