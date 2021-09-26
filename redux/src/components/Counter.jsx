@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DECREMENT, INCREMENT, TOGGLE } from '../reducers/counterReducer';
+import { counterActions } from '../store';
+// import { DECREMENT, INCREMENT, TOGGLE } from '../reducers/counterReducer';
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -9,15 +10,19 @@ const Counter = () => {
   const showCounter = useSelector(state => state.showCounter);
 
   const toggleCounterHandler = () => {
-    dispatch({ type: TOGGLE });
+    // dispatch({ type: TOGGLE });
+    dispatch(counterActions.TOGGLE());
   };
 
   const incrementHandler = (amount = 1) => {
-    dispatch({ type: INCREMENT, value: amount });
+    // dispatch({ type: INCREMENT, value: amount });
+    dispatch(counterActions.INCREMENT(amount));
+    // {type:SOME_UNIQUE_VALUE,payload:amount} - It's always payload
   };
 
   const decrementHandler = (amount = 1) => {
-    dispatch({ type: DECREMENT, value: amount });
+    // dispatch({ type: DECREMENT, value: amount });
+    dispatch(counterActions.DECREMENT(amount));
   };
 
   return (
