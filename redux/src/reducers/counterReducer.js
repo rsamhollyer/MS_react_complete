@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
-export const TOGGLE = 'TOGGLE';
+// export const INCREMENT = 'INCREMENT';
+// export const DECREMENT = 'DECREMENT';
+// export const TOGGLE = 'TOGGLE';
 // const DEFAULT = 'DEFAULT';
 
 const initialState = { counter: 0, showCounter: true };
 
-export const counterSlice = createSlice({
+const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
@@ -24,6 +24,7 @@ export const counterSlice = createSlice({
 });
 
 export const counterActions = counterSlice.actions;
+export const counterReducers = counterSlice.reducer;
 // export const counterReducer = (state = initialState, action) => {
 //   const actions = {
 //     INCREMENT: { ...state, counter: state.counter + action.value },
