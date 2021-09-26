@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { DECREMENT, INCREMENT, TOGGLE } from '../reducers/counterReducer';
 import classes from './Counter.module.css';
 
