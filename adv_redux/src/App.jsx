@@ -4,7 +4,7 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
-import { sendCartData } from './store/cart-slice';
+import { getCartData, sendCartData } from './store/cart-actions';
 
 function App() {
   const showCart = useSelector(state => state.ui.cartIsVisible);
@@ -12,6 +12,10 @@ function App() {
   const dispatch = useDispatch();
   const notification = useSelector(state => state.ui.notification);
   const initialRender = useRef(true);
+
+  useEffect(() => {
+    dispatch(getCartData());
+  }, [dispatch]);
 
   useEffect(() => {
     // Prevent initial load running the fetch request
