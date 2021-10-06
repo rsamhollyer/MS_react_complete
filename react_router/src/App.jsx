@@ -18,12 +18,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/welcome" component={Welcome} />
-          <Route path="/products" component={Products} />
-          <Route
-            exact
-            path="/products/detail/:product"
-            component={ProductDetail}
-          />
+          <Route exact path="/products" component={Products} />
+          <Route path="/products/detail/:product" component={ProductDetail} />
         </Switch>
       </main>
       <div />
