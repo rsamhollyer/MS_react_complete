@@ -1,27 +1,79 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
+import Notification from './components/UI/Notification';
+import { uiActions } from './store/ui-slice';
 
 function App() {
   const showCart = useSelector(state => state.ui.cartIsVisible);
   const cart = useSelector(state => state.cart);
+  const dispatch = useDispatch();
+  const notification = useSelector(state => state.ui.notification);
+  const initialRender = useRef(true);
 
   useEffect(() => {
-    fetch('https://react-http-af080-default-rtdb.firebaseio.com/cart.json', {
-      method: 'PUT',
-      body: JSON.stringify(cart),
-    });
+    const sendCartData = async () => {
+      dispatch(
+        uiActions.showNotification({
+          status: 'pending',
+          title: 'Sending...',
+          message: 'Sending cart data',
+        })
+      );
+      const response = await fetch(
+        'https://react-http-af080-default-rtdb.firebaseio.com/cart.json',
+        {
+          method: 'PUT',
+          body: JSON.stringify(cart),
+        }
+      );
 
-    return () => {};
-  }, [cart]);
+      if (!response.ok) {
+        throw new Error('Something went wrong with cart data');
+      }
+
+      dispatch(
+        uiActions.showNotification({
+          status: 'success',
+          title: 'Success',
+          message: 'Successfully fethced cart data',
+        })
+      );
+    };
+
+    // Prevent initial load running the fetch request
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+
+    sendCartData().catch(() => {
+      dispatch(
+        uiActions.showNotification({
+          status: 'error',
+          title: 'Error',
+          message: 'Sending cart data failed!',
+        })
+      );
+    });
+  }, [cart, dispatch]);
 
   return (
-    <Layout>
-      {showCart && <Cart />}
-      <Products />
-    </Layout>
+    <>
+      {notification && (
+        <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+        />
+      )}
+      <Layout>
+        {showCart && <Cart />}
+        <Products />
+      </Layout>
+    </>
   );
 }
 
