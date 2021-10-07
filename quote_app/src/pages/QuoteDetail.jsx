@@ -1,7 +1,8 @@
 import React from 'react';
-import { Redirect, Route, useParams } from 'react-router-dom';
+import { Route, useParams } from 'react-router-dom';
 import Comments from '../components/comments/Comments';
 import HighlightedQuote from '../components/quotes/HighlightedQuote';
+import NotFound from './NotFound';
 
 const ALL_QUOTES = [
   { id: 'q1', author: 'Sam', text: 'Lorem' },
@@ -14,7 +15,7 @@ export default function QuoteDetail() {
   const quoteDetail = ALL_QUOTES.find(quote => quote.id === params.quoteId);
 
   if (!quoteDetail) {
-    return <Redirect exact to="/quotes" />;
+    return <Route component={NotFound} />;
   }
 
   return (
