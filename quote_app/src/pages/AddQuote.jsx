@@ -1,5 +1,9 @@
 import React from 'react';
 
 export default function AddQuote() {
-  return <div />;
+  return (
+    <div>
+      <h2>New Quote</h2>
+    </div>
+  );
 }
