@@ -36,7 +36,7 @@ const QuoteForm = props => {
           <textarea id="text" rows="5" ref={textInputRef} />
         </div>
         <div className={classes.actions}>
-          <button type="button" className="btn">
+          <button type="submit" className="btn">
             Add Quote
           </button>
         </div>
