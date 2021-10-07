@@ -5,7 +5,6 @@ import QuoteForm from '../components/quotes/QuoteForm';
 export default function AddQuote() {
   const history = useHistory();
   const addQuoteHandler = quoteData => {
-    console.log(quoteData);
     history.push('/quotes');
   };
   return (
