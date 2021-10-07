@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import classes from './Comments.module.css';
 import NewCommentForm from './NewCommentForm';
 
-
 const Comments = () => {
   const [isAddingComment, setIsAddingComment] = useState(false);
 
@@ -14,7 +13,7 @@ const Comments = () => {
     <section className={classes.comments}>
       <h2>User Comments</h2>
       {!isAddingComment && (
-        <button className="btn" onClick={startAddCommentHandler}>
+        <button type="button" className="btn" onClick={startAddCommentHandler}>
           Add a Comment
         </button>
       )}
