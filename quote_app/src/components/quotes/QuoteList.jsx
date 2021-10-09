@@ -16,14 +16,17 @@ const QuoteList = props => {
   const sortedQuotes = sortQuotes(props.quotes, sortDirection);
 
   const sortingHandler = () => {
-    history.push(`/quotes?sort=${sortDirection}`);
+    history.push({
+      pathname: location.pathname,
+      search: `?sort=${sortDirection}`,
+    });
   };
 
   return (
     <>
       <div className={classes.sorting}>
         <button onClick={sortingHandler} type="button">
-          {buttonText}
+          Sort {buttonText}
         </button>
       </div>
       <ul className={classes.list}>

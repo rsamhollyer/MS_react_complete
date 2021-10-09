@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route, useParams } from 'react-router-dom';
+import { Link, Route, useParams, useRouteMatch } from 'react-router-dom';
 import Comments from '../components/comments/Comments';
 import HighlightedQuote from '../components/quotes/HighlightedQuote';
 import NotFound from './NotFound';
@@ -11,6 +11,7 @@ const ALL_QUOTES = [
 ];
 
 export default function QuoteDetail() {
+  const match = useRouteMatch();
   const params = useParams();
   const quoteDetail = ALL_QUOTES.find(quote => quote.id === params.quoteId);
 
@@ -24,20 +25,16 @@ export default function QuoteDetail() {
       <HighlightedQuote text={quoteDetail.text} author={quoteDetail.author} />
       <Route
         exact
-        path={`/quotes/${params.quoteId}`}
+        path={match.path}
         render={() => (
           <div className="centered">
-            <Link className="btn" to={`/quotes/${params.quoteId}/comments`}>
+            <Link className="btn" to={`${match.url}/comments`}>
               Load Comments
             </Link>
           </div>
         )}
       />
-      <Route
-        exact
-        path={`/quotes/${params.quoteId}/comments`}
-        component={Comments}
-      />
+      <Route exact path={`${match.path}/comments`} component={Comments} />
     </div>
   );
 }
