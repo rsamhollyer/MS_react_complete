@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import classes from './QuoteItem.module.css';
+import styles from './QuoteItem.module.css';
 
 const QuoteItem = props => (
-  <li className={classes.item}>
+  <li className={styles.item}>
     <figure>
       <blockquote>
         <p>{props.text}</p>

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import useHttp from '../../hooks/useHttp';
 import { getAllComments } from '../../lib/api';
 import LoadingSpinner from '../UI/LoadingSpinner';
-import classes from './Comments.module.css';
+import styles from './Comments.module.css';
 import CommentsList from './CommentsList';
 import NewCommentForm from './NewCommentForm';
 
@@ -42,7 +42,7 @@ const Comments = () => {
   }, [sendRequest, quoteId]);
 
   return (
-    <section className={classes.comments}>
+    <section className={styles.comments}>
       <h2>User Comments</h2>
       {!isAddingComment && (
         <button type="button" className="btn" onClick={startAddCommentHandler}>

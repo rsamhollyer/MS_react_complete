@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './HighlightedQuote.module.css';
+import styles from './HighlightedQuote.module.css';
 
 const HighlightedQuote = props => (
-  <figure className={classes.quote}>
+  <figure className={styles.quote}>
     <p>{props?.text}</p>
     <figcaption>{props?.author}</figcaption>
   </figure>

@@ -1,6 +1,6 @@
 import React from 'react';
-import classes from './Card.module.css';
+import styles from './Card.module.css';
 
-const Card = props => <div className={classes.card}>{props.children}</div>;
+const Card = props => <div className={styles.card}>{props.children}</div>;
 
 export default Card;

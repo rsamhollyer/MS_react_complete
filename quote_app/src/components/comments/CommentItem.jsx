@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './CommentItem.module.css';
+import styles from './CommentItem.module.css';
 
 const CommentItem = props => (
-  <li className={classes.item}>
+  <li className={styles.item}>
     <p>{props.text}</p>
   </li>
 );

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { sortQuotes } from '../../utils/sortQuotes';
 import QuoteItem from './QuoteItem';
-import classes from './QuoteList.module.css';
+import styles from './QuoteList.module.css';
 
 const QuoteList = props => {
   const history = useHistory();
@@ -24,12 +24,12 @@ const QuoteList = props => {
 
   return (
     <>
-      <div className={classes.sorting}>
+      <div className={styles.sorting}>
         <button onClick={sortingHandler} type="button">
           Sort {buttonText}
         </button>
       </div>
-      <ul className={classes.list}>
+      <ul className={styles.list}>
         {sortedQuotes.map(quote => (
           <QuoteItem
             key={quote.id}
