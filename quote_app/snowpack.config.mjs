@@ -11,9 +11,9 @@ export default {
   ],
   optimize: {
     /* Example: Bundle your final build: */
-    // bundle: true,
-    // minify: true,
-    // treeshake: true,
+    // bundle: true, This does not currently work with CSS modules.
+    minify: true,
+    treeshake: true,
   },
   packageOptions: {
     /* ... */
