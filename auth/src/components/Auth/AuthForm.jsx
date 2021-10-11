@@ -1,13 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
+import { AuthContext } from '../../store/AuthContext';
 import classes from './AuthForm.module.css';
 
 // eslint-disable-next-line no-undef
 const { SNOWPACK_PUBLIC_WEB_API_KEY } = __SNOWPACK_ENV__;
+
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+
+  const authCtx = useContext(AuthContext);
 
   const switchAuthModeHandler = () => {
     setIsLogin(prevState => !prevState);
@@ -48,7 +52,7 @@ const AuthForm = () => {
           throw new Error(errorMessage);
         });
       })
-      .then(data => console.log(data))
+      .then(data => authCtx.login(data.idToken))
       .catch(error => alert(error));
   };
 
