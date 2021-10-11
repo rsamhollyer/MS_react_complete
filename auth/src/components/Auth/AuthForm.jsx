@@ -6,9 +6,9 @@ const { SNOWPACK_PUBLIC_WEB_API_KEY } = __SNOWPACK_ENV__;
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+
   const switchAuthModeHandler = () => {
     setIsLogin(prevState => !prevState);
   };
@@ -17,38 +17,39 @@ const AuthForm = () => {
     e.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-
+    let url;
     // optional formValidation
     setIsLoading(true);
+    const bodyDetails = {
+      method: 'POST',
+      body: JSON.stringify({
+        email: String(enteredEmail),
+        password: String(enteredPassword),
+        returnSecureToken: true,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
     if (isLogin) {
-      console.log('Hi');
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${SNOWPACK_PUBLIC_WEB_API_KEY}`;
     } else {
-      fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${SNOWPACK_PUBLIC_WEB_API_KEY}`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            email: String(enteredEmail),
-            password: String(enteredPassword),
-            returnSecureToken: true,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      ).then(res => {
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${SNOWPACK_PUBLIC_WEB_API_KEY}`;
+    }
+    fetch(url, bodyDetails)
+      .then(res => {
         setIsLoading(false);
         if (res.ok) {
-          // ...
-        } else {
-          return res.json().then(data => {
-            let errorMessage = 'Authentication Failed';
-            errorMessage = data?.error?.message;
-            alert(errorMessage);
-          });
+          return res.json();
         }
-      });
-    }
+        return res.json().then(data => {
+          let errorMessage = 'Authentication Failed';
+          errorMessage = data?.error?.message;
+          throw new Error(errorMessage);
+        });
+      })
+      .then(data => console.log(data))
+      .catch(error => alert(error));
   };
 
   return (
