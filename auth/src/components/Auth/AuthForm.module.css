@@ -9,7 +9,8 @@
   text-align: center;
 }
 
-.auth h1 {
+.auth h1,
+.auth p {
   text-align: center;
   color: white;
 }
