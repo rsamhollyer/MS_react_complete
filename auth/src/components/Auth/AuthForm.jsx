@@ -1,24 +1,67 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import classes from './AuthForm.module.css';
 
+// eslint-disable-next-line no-undef
+const { SNOWPACK_PUBLIC_WEB_API_KEY } = __SNOWPACK_ENV__;
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
-
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
   const switchAuthModeHandler = () => {
     setIsLogin(prevState => !prevState);
+  };
+
+  const submitHandler = e => {
+    e.preventDefault();
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    // optional formValidation
+
+    if (isLogin) {
+      console.log('Hi');
+    } else {
+      fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${SNOWPACK_PUBLIC_WEB_API_KEY}`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            email: String(enteredEmail),
+            password: String(enteredPassword),
+            returnSecureToken: true,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      ).then(res => {
+        if (res.ok) {
+          // ...
+        } else {
+          return res.json().then(data => {
+            console.log(data);
+          });
+        }
+      });
+    }
   };
 
   return (
     <section className={classes.auth}>
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
-      <form>
+      <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" required />
+          <input type="email" id="email" required ref={emailInputRef} />
         </div>
         <div className={classes.control}>
           <label htmlFor="password">Your Password</label>
-          <input type="password" id="password" required />
+          <input
+            type="password"
+            id="password"
+            required
+            ref={passwordInputRef}
+          />
         </div>
         <div className={classes.actions}>
           <button type="submit">{isLogin ? 'Login' : 'Create Account'}</button>
