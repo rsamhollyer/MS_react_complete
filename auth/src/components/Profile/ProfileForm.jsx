@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../store/AuthContext';
 import { updateUserPasswordUrl } from '../../utils/firebase-urls';
 import classes from './ProfileForm.module.css';
@@ -6,7 +7,7 @@ import classes from './ProfileForm.module.css';
 const ProfileForm = () => {
   const newPWInput = useRef();
   const authCtx = useContext(AuthContext);
-
+  const history = useHistory();
   const submitHandler = e => {
     e.preventDefault();
     const newPassword = newPWInput.current.value;
@@ -22,7 +23,8 @@ const ProfileForm = () => {
       headers: { 'Content-Type': 'application/json' },
     }).then(res => {
       // Assume always succeeds\
-      console.log(res);
+
+      history.replace('/');
     });
   };
 

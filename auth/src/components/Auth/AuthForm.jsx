@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../store/AuthContext';
 import { createUserUrl, loginUserUrl } from '../../utils/firebase-urls';
 import classes from './AuthForm.module.css';
@@ -8,6 +9,7 @@ const AuthForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const history = useHistory();
 
   const authCtx = useContext(AuthContext);
 
@@ -50,7 +52,10 @@ const AuthForm = () => {
           throw new Error(errorMessage);
         });
       })
-      .then(data => authCtx.login(data.idToken))
+      .then(data => {
+        authCtx.login(data.idToken);
+        history.replace('/');
+      })
       .catch(error => alert(error));
   };
 
