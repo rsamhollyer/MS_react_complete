@@ -1,9 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../../store/AuthContext';
+import { createUserUrl, loginUserUrl } from '../../utils/firebase-urls';
 import classes from './AuthForm.module.css';
-
-// eslint-disable-next-line no-undef
-const { SNOWPACK_PUBLIC_WEB_API_KEY } = __SNOWPACK_ENV__;
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -36,9 +34,9 @@ const AuthForm = () => {
       },
     };
     if (isLogin) {
-      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${SNOWPACK_PUBLIC_WEB_API_KEY}`;
+      url = loginUserUrl;
     } else {
-      url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${SNOWPACK_PUBLIC_WEB_API_KEY}`;
+      url = createUserUrl;
     }
     fetch(url, bodyDetails)
       .then(res => {
