@@ -10,15 +10,18 @@ const initialData = {
 export const AuthContext = createContext(initialData);
 
 export default function AuthContextProvider({ children }) {
-  const [token, setToken] = useState(null);
+  const initialToken = localStorage.getItem('token');
+  const [token, setToken] = useState(initialToken);
 
   const userIsLoggedIn = !!token;
 
   const loginHandler = someToken => {
     setToken(someToken);
+    localStorage.setItem('token', someToken);
   };
   const logoutHandler = () => {
     setToken(null);
+    localStorage.removeItem('token');
   };
 
   const contextValue = {
