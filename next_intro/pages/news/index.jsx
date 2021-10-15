@@ -11,7 +11,9 @@ export default function NewsPage() {
         <li>
           <Link href="/news/nextjs">NextJS</Link>
         </li>
-        <Link href="/news/something-else">Something Else</Link>
+        <li>
+          <Link href="/news/something-else">Something Else</Link>
+        </li>
       </ul>
     </>
   );
