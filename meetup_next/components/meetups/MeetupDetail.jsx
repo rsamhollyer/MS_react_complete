@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './MeetupDetail.module.css';
 
-export default function MeetupDetail({ title, image, address, description }) {
+export default function MeetupDetail({ meetupData }) {
+  const { title, image, address, description } = meetupData;
   return (
     <section className={styles.detail}>
       <img className={styles.image} src={image} alt={title} />

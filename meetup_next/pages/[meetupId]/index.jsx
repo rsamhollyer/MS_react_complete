@@ -1,8 +1,8 @@
 import React from 'react';
 import MeetupDetail from '../../components/meetups/MeetupDetail';
 
-export default function MeetupDetails() {
-  return <MeetupDetail />;
+export default function MeetupDetails({ meetupData }) {
+  return <MeetupDetail meetupData={meetupData} />;
 }
 
 export async function getStaticPaths() {
@@ -28,12 +28,14 @@ export async function getStaticProps(context) {
   // Could fetch data here
   return {
     props: {
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg',
-      id: meetupId,
-      title: 'First Meetup',
-      address: 'Some Street 5, Some City',
-      description: 'This is a first meetup',
+      meetupData: {
+        image:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg',
+        id: meetupId,
+        title: 'First Meetup',
+        address: 'Some Street 5, Some City',
+        description: 'This is a first meetup',
+      },
     },
   };
 }
