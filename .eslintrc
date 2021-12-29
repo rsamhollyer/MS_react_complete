@@ -1,4 +1,16 @@
 {
   "extends": ["wesbos"],
-  "react/prop-types": "ignore"
+  "rules": {
+    "react/prop-types": 0,
+    "react/jsx-no-bind": [
+      0,
+      {
+        "ignoreDOMComponents": true,
+        "ignoreRefs": true,
+        "allowArrowFunctions": true,
+        "allowFunctions": true,
+        "allowBind": true
+      }
+    ]
+  }
 }
