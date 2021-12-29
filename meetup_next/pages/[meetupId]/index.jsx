@@ -5,21 +5,35 @@ export default function MeetupDetails() {
   return <MeetupDetail />;
 }
 
-export async function getStaticProps(context) {
-  const {
-    params: { meetupId },
-  } = context;
-  // Could fetch data here
+export async function getStaticPaths() {
+  return {
+    fallback: false,
+    paths: [
+      {
+        params: {
+          meetupId: 'm1',
+        },
+      },
+      {
+        params: {
+          meetupId: 'm2',
+        },
+      },
+    ],
+  };
+}
 
-  console.log(meetupId);
+export async function getStaticProps(context) {
+  const { meetupId } = context.params;
+  // Could fetch data here
   return {
     props: {
       image:
-        'https://upload.wikimedia.org/wikipedia/commons/4/40/Panor%C3%A1mica_Oto%C3%B1o_Alc%C3%A1zar_de_Segovia.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg',
+      id: meetupId,
       title: 'First Meetup',
-      address: '123 First Street',
-      description: 'First Meetup!',
-      id: 'm1',
+      address: 'Some Street 5, Some City',
+      description: 'This is a first meetup',
     },
   };
 }
