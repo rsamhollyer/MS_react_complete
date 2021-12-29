@@ -1,5 +1,6 @@
 import React from 'react';
 import MeetupList from '../components/meetups/MeetupList';
+import { DUMMY_DATA } from '../utils/meetups';
 
 export default function HomePage({ meetups }) {
   return <MeetupList meetups={meetups} />;
@@ -16,7 +17,7 @@ export async function getStaticProps() {
   };
 }
 
-Runs on the server AFTER deployment
+// Runs on the server AFTER deployment
 // Only need if you need request object OR have data that changes constantly - not good for this particular project
 
 // export async function getServerSideProps(context) {
