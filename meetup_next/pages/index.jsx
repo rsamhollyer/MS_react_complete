@@ -1,6 +1,6 @@
+import { MongoClient } from 'mongodb';
 import React from 'react';
 import MeetupList from '../components/meetups/MeetupList';
-import { DUMMY_DATA } from '../utils/meetups';
 
 export default function HomePage({ meetups }) {
   return <MeetupList meetups={meetups} />;
@@ -9,9 +9,24 @@ export default function HomePage({ meetups }) {
 // Moves data fetching to build process side of things - caching
 
 export async function getStaticProps() {
+  MongoClient.connect();
+
+  const client = await MongoClient.connect(
+    `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_PASSWORD}@cluster0.ggmv6.mongodb.net/meetups?retryWrites=true&w=majority`
+  );
+
+  const db = client.db();
+  const meetupsCollection = db.collection('meetups');
+  const allMeetups = await meetupsCollection.find().toArray();
+  client.close();
+
   return {
     props: {
-      meetups: DUMMY_DATA,
+      meetups: allMeetups.map(meetup => {
+        const payload = { ...meetup, id: meetup._id.toString() };
+        const { _id, ...newPayload } = payload;
+        return newPayload;
+      }),
     },
     revalidate: 1, // Seconds Nextjs will wait before regenerating the page for incoming requests. This is use dependent.
   };
