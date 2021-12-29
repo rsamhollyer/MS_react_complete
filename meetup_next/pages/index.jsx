@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import MeetupList from '../components/meetups/MeetupList';
 import { DUMMY_DATA } from '../utils/meetups';
 
-export default function HomePage() {
-  const [loadedMeetups, setLoadedMeetups] = useState([]);
-  useEffect(() => {
-    setLoadedMeetups(DUMMY_DATA);
-  }, []);
+export default function HomePage({ meetups }) {
+  return <MeetupList meetups={meetups} />;
+}
 
-  return <MeetupList meetups={loadedMeetups} />;
+export async function getStaticProps() {
+  // Moves data fetching to build process side of thigns
+  return {
+    props: {
+      meetups: DUMMY_DATA,
+    },
+  };
 }
