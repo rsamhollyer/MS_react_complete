@@ -28,7 +28,7 @@ export async function getStaticPaths() {
   client.close();
 
   return {
-    fallback: false,
+    fallback: 'blocking', // List of paths not exhaustive - generate page on demand and cache it
     paths: meetupsArray.map(meetup => ({
       params: { meetupId: meetup._id.toString() },
     })),
