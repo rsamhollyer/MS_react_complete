@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 import NewMeetupForm from '../../components/meetups/NewMeetupForm';
@@ -17,10 +18,19 @@ export default function NewMeetupPage() {
     router.replace('/');
   }
   return (
-    <div>
+    <>
+      <Head>
+        <title>Add new Shit!</title>
+        <meta property="og:title" content="Add new Shit!" key="title" />
+        <meta
+          name="description"
+          content="Make the shit pile grow"
+          key="description"
+        />
+      </Head>
       <h1>New Meetup</h1>
 
       <NewMeetupForm onAddMeetup={addMeetupHandler} />
-    </div>
+    </>
   );
 }

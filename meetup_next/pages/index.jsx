@@ -1,9 +1,23 @@
 import { MongoClient } from 'mongodb';
+import Head from 'next/head';
 import React from 'react';
 import MeetupList from '../components/meetups/MeetupList';
 
 export default function HomePage({ meetups }) {
-  return <MeetupList meetups={meetups} />;
+  return (
+    <>
+      <Head>
+        <title>React Next Meetups</title>
+        <meta property="og:title" content="React Next Meetups" key="title" />
+        <meta
+          name="description"
+          content="This site has a lot of shit on it"
+          key="description"
+        />
+      </Head>
+      <MeetupList meetups={meetups} />
+    </>
+  );
 }
 
 // Moves data fetching to build process side of things - caching
