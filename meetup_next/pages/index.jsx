@@ -9,8 +9,6 @@ export default function HomePage({ meetups }) {
 // Moves data fetching to build process side of things - caching
 
 export async function getStaticProps() {
-  MongoClient.connect();
-
   const client = await MongoClient.connect(
     `mongodb+srv://${process.env.DB_USER_NAME}:${process.env.DB_PASSWORD}@cluster0.ggmv6.mongodb.net/meetups?retryWrites=true&w=majority`
   );
