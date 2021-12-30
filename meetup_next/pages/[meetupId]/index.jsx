@@ -3,7 +3,6 @@ import React from 'react';
 import MeetupDetail from '../../components/meetups/MeetupDetail';
 
 export default function MeetupDetails({ meetupData }) {
-  console.log(meetupData);
   return <MeetupDetail meetupData={meetupData} />;
 }
 
