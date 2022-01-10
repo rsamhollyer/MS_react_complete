@@ -26,12 +26,12 @@
 }
 .fade-enter-active {
   opacity: 1;
-  transition: 0.3s ease-out;
+  transition: 0.5s ease-out;
 }
 .fade-exit {
   opacity: 1;
 }
 .fade-exit-active {
   opacity: 0;
-  transition: cubic-bezier(0.39, 0.575, 0.565, 1);
+  transition: 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 }
