@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Transition } from 'react-transition-group';
 import './App.css';
 import Backdrop from './components/Backdrop/Backdrop';
 import List from './components/List/List';
@@ -9,6 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       modalIsOpen: false,
+      showBlock: false,
     };
   }
 
@@ -20,11 +22,47 @@ class App extends Component {
     this.setState({ modalIsOpen: false });
   };
 
-  /* To try and attain a cleaner DOM, we can try to conditionally render the components, but that does not let us keep the close modal animation because of the reactive nature of React */
+  /* To try and attain a cleaner DOM, we can try to conditionally render the components, but that does not let us keep the close modal animation because of the reactive nature of React.
+  We need to use an outside package for this; enter react-transition-group */
   render() {
     return (
       <div className="App">
         <h1>React Animations</h1>
+        <button
+          className="Button"
+          onClick={() =>
+            this.setState(prevState => ({
+              showBlock: !prevState.showBlock,
+            }))
+          }
+          type="button"
+        >
+          Toggle
+        </button>
+        <br />
+
+        <Transition
+          in={this.state.showBlock}
+          timeout={1000}
+          mountOnEnter
+          unmountOnExit
+        >
+          {state => (
+            <div
+              style={{
+                backgroundColor: 'red',
+                width: '100px',
+                height: '100px',
+                margin: 'auto',
+                transition: 'opacity 1s ease-out',
+                opacity: state === 'exiting' ? 0 : 1,
+              }}
+            >
+              Block
+            </div>
+          )}
+        </Transition>
+
         {this.state.modalIsOpen ? (
           <>
             <Modal show={this.state.modalIsOpen} closed={this.closeModal} />{' '}
