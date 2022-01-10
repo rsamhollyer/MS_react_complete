@@ -20,12 +20,17 @@ class App extends Component {
     this.setState({ modalIsOpen: false });
   };
 
+  /* To try and attain a cleaner DOM, we can try to conditionally render the components, but that does not let us keep the close modal animation because of the reactive nature of React */
   render() {
     return (
       <div className="App">
         <h1>React Animations</h1>
-        <Modal show={this.state.modalIsOpen} closed={this.closeModal} />
-        <Backdrop show={this.state.modalIsOpen} />
+        {this.state.modalIsOpen ? (
+          <>
+            <Modal show={this.state.modalIsOpen} closed={this.closeModal} />{' '}
+            <Backdrop show={this.state.modalIsOpen} />
+          </>
+        ) : null}
         <button type="button" className="Button" onClick={this.showModal}>
           Open Modal
         </button>
