@@ -11,7 +11,9 @@ export function useStore() {
     const newState = actions[actionIdentifier](globalState, payload);
     globalState = { ...globalState, ...newState };
 
-    listeners.forEach(listener => listener(globalState));
+    for (const listener of listeners) {
+      listener(globalState);
+    }
   };
 
   useEffect(() => {
