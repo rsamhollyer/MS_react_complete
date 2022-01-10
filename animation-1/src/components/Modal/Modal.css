@@ -13,27 +13,27 @@
   transition: all 0.3s ease-out;
 }
 
-/* .ModalOpen {
+.ModalOpen {
   animation: openModal 0.4s ease-in-out forwards;
 }
 
 .ModalClosed {
   animation: closeModal 1s ease-in-out forwards;
-} */
-
-/* .fade-slider-enter {
-} */
+}
+/* 
+.fade-slider-enter {
+}
 
 .fade-slide-enter-active {
   animation: openModal 0.4s ease-in-out forwards;
 }
 
-/* .fade-slide-exit { */
-/* } */
+.fade-slide-exit {
+}
 
 .fade-slide-exit-active {
   animation: closeModal 1s ease-in-out forwards;
-}
+} */
 
 @keyframes openModal {
   0% {
