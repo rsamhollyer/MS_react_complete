@@ -3,10 +3,8 @@ import { ProductsContext } from '../../context/products-context';
 import Card from '../UI/Card';
 import './ProductItem.css';
 
-
 const ProductItem = props => {
-
-  const toggleFav = useContext(ProductsContext).toggleFav;
+  const { toggleFav } = useContext(ProductsContext);
 
   const toggleFavHandler = () => {
     toggleFav(props.id);
@@ -18,6 +16,7 @@ const ProductItem = props => {
         <h2 className={props.isFav ? 'is-fav' : ''}>{props.title}</h2>
         <p>{props.description}</p>
         <button
+          type="button"
           className={!props.isFav ? 'button-outline' : ''}
           onClick={toggleFavHandler}
         >
