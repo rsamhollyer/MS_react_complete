@@ -22,4 +22,9 @@ person = { name: 'Sam', age: 38 };
 /* Type Inference */
 
 let course = 'React - The Complete Guide';
-course = 1234; // Since variable was immediately initialized with a string, it is infered to always be stringed. This is a better process to avoid redundancy in typing
+// course = 1234; // Since variable was immediately initialized with a string, it is infered to always be stringed. This is a better process to avoid redundancy in typing
+
+/* Union Type */
+
+let course2: string | number;
+course2 = 12345;
