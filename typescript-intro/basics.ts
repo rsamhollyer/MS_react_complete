@@ -1,3 +1,4 @@
+/* Primitive Types */
 let age: number;
 age = 12;
 
@@ -6,3 +7,19 @@ userName = 'Sam';
 
 let isInstructor: boolean;
 isInstructor = false;
+
+/* More Complex Types */
+
+let hobbies: string[];
+hobbies = ['Sports', 'Cooking'];
+
+let person: {
+  name: string;
+  age: number;
+}; // 'any' is a catch up type that you should try and avoid
+person = { name: 'Sam', age: 38 };
+
+/* Type Inference */
+
+let course = 'React - The Complete Guide';
+course = 1234; // Since variable was immediately initialized with a string, it is infered to always be stringed. This is a better process to avoid redundancy in typing

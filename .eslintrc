@@ -1,6 +1,7 @@
 {
   "extends": ["wesbos"],
   "rules": {
+    "prefer-const": 0,
     "react/prop-types": 0,
     "react/destructuring-assignment": 0,
     "react-hooks/rules-of-hooks": 0,
