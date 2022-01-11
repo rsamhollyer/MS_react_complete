@@ -28,3 +28,11 @@ let course = 'React - The Complete Guide';
 
 let course2: string | number;
 course2 = 12345;
+
+/* Type Alias */
+type Person = { name: string; age: number };
+
+let person2: Person;
+person2 = { name: 'Sam2', age: 38 };
+
+// let people: Person[];
