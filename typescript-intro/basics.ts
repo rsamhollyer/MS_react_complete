@@ -47,3 +47,17 @@ function print2(value: any) {
   // Special return type 'void' for functions that never return
   console.log(value);
 }
+
+/* Generics */
+
+function insertAtBeg<T>(array: T[], value: T) {
+  // The <T> is a special feature called a 'generic' type. It helps developers create on the fly types that don't rely on the any type, but can be used for any type. The 'T' is an arbitrary, but widely accepted convention
+  const newArr = [value, ...array];
+  return newArr;
+}
+
+const demoArr = [1, 2, 3];
+const update = insertAtBeg(demoArr, -1);
+const strings = insertAtBeg(['a', 'b', 'c'], 'd');
+// update[0].split(''); // Runtime error because update is an array of numbers
+strings[0].split('');
