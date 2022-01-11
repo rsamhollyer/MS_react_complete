@@ -36,3 +36,14 @@ let person2: Person;
 person2 = { name: 'Sam2', age: 38 };
 
 // let people: Person[];
+
+/* Functions */
+function add2(a: number, b: number) {
+  // Can explicitly or implicitly add return type
+  return a + b;
+}
+
+function print2(value: any) {
+  // Special return type 'void' for functions that never return
+  console.log(value);
+}
