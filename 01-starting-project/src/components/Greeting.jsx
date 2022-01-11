@@ -4,7 +4,7 @@ export default function Greeting() {
   const [changedText, setChangedText] = useState(false);
 
   const changeTextHandler = () => {
-    setChangedText(true);
+    setChangedText(prevState => !prevState);
   };
 
   return (

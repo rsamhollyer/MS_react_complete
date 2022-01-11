@@ -37,4 +37,18 @@ describe('Greeting component', () => {
     });
     expect(outputElement).toBeInTheDocument();
   });
+
+  test('does not render text associated with the wrong button state', () => {
+    render(<Greeting />);
+
+    /* Act */
+    const buttonElement = screen.getByRole('button');
+    userEvent.click(buttonElement);
+
+    /* Assert */
+    const outputElement = screen.queryByText('Nice to meet you', {
+      exact: false,
+    });
+    expect(outputElement).toBeNull();
+  });
 });
