@@ -1,5 +1,3 @@
-import React from 'react';
-
 import IngredientForm from './IngredientForm';
 import Search from './Search';
 
