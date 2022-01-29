@@ -7,11 +7,15 @@ function Ingredients() {
   const [ingredients, setIngredients] = useState([]);
 
   const addIngredientHandler = newIngredient => {
-    const newId = new Date();
+    const newId = new Date().getTime();
     setIngredients(prevState => [
       ...prevState,
       { id: newId, ...newIngredient },
     ]);
+  };
+
+  const removeIngredientHandler = igID => {
+    setIngredients(prevState => prevState.filter(ingred => ingred.id !== igID));
   };
 
   return (
@@ -20,7 +24,10 @@ function Ingredients() {
 
       <section>
         <Search />
-        <IngredientList ingredients={ingredients} onRemoveItem={() => {}} />
+        <IngredientList
+          ingredients={ingredients}
+          onRemoveItem={removeIngredientHandler}
+        />
       </section>
     </div>
   );

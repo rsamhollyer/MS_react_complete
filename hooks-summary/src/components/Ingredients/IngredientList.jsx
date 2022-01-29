@@ -1,11 +1,11 @@
 import './IngredientList.css';
 
-const IngredientList = props => (
+const IngredientList = ({ onRemoveItem, ingredients }) => (
   <section className="ingredient-list">
     <h2>Loaded Ingredients</h2>
     <ul>
-      {props.ingredients.map(ig => (
-        <li key={ig.id} onClick={props.onRemoveItem.bind(this, ig.id)}>
+      {ingredients.map(ig => (
+        <li key={ig.id} onClick={() => onRemoveItem(ig.id)}>
           <span>{ig.title}</span>
           <span>{ig.amount}x</span>
         </li>
