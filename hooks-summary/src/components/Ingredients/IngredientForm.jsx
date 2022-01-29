@@ -5,9 +5,15 @@ import './IngredientForm.css';
 
 const IngredientForm = React.memo(() => {
   const [inputState, setInputState] = useState({ title: '', amount: '' });
+
   const submitHandler = e => {
     e.preventDefault();
-    // ...
+    /* ... */
+  };
+
+  const inputSettingFunction = (e, stateString) => {
+    const { value } = e.target;
+    setInputState(prevState => ({ ...prevState, [stateString]: value }));
   };
 
   return (
@@ -20,12 +26,7 @@ const IngredientForm = React.memo(() => {
               type="text"
               id="title"
               value={inputState.title}
-              onChange={e =>
-                setInputState(prev => ({
-                  title: e.target.value,
-                  amount: prev.amount,
-                }))
-              }
+              onChange={e => inputSettingFunction(e, 'title')}
             />
           </div>
           <div className="form-control">
@@ -34,12 +35,7 @@ const IngredientForm = React.memo(() => {
               type="number"
               id="amount"
               value={inputState.amount}
-              onChange={e =>
-                setInputState(prev => ({
-                  amount: e.target.value,
-                  title: prev.title,
-                }))
-              }
+              onChange={e => inputSettingFunction(e, 'amount')}
             />
           </div>
           <div className="ingredient-form__actions">
