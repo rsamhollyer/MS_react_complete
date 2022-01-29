@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
@@ -16,6 +16,20 @@ export async function fetchPostIngreds(url, bodyString) {
   return response;
 }
 
+export async function fetchGetIngred(url) {
+  const res = await fetch(url);
+  const response = await res.json();
+  const ingredData = [];
+  for (const key of Object.keys(response)) {
+    ingredData.push({
+      id: key,
+      title: response[key].title,
+      amount: response[key].amount,
+    });
+  }
+  return ingredData;
+}
+
 function Ingredients() {
   const [ingredients, setIngredients] = useState([]);
 
@@ -28,6 +42,14 @@ function Ingredients() {
   const removeIngredientHandler = igID => {
     setIngredients(prevState => prevState.filter(ingred => ingred.id !== igID));
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const allIngreds = await fetchGetIngred(URLString);
+      setIngredients(allIngreds);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="App">
