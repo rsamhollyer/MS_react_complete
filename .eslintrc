@@ -3,7 +3,6 @@
   "plugins": ["unused-imports"],
   "rules": {
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
       "warn",
@@ -30,5 +29,19 @@
     ],
     "no-unused-expressions": "off",
     "react/jsx-boolean-value": 0
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts?(x)"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+      },
+      "rules": { "@typescript-eslint/no-unused-vars": "off" }
+    }
+  ]
 }
