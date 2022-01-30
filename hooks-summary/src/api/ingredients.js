@@ -15,6 +15,8 @@ export async function fetchGetIngred(url) {
   const res = await fetch(`${url}.json`);
   const response = await res.json();
   const ingredData = [];
+  if (!response) return ingredData;
+
   for (const key of Object.keys(response)) {
     ingredData.push({
       id: key,
