@@ -14,7 +14,7 @@ const Search = React.memo(({ onLoadIngredients }) => {
           ? ''
           : `?orderBy="title"&equalTo="${searchState}"`;
       const searchedIngredients = await fetchGetIngred(URLString + query);
-      // onLoadIngredients(searchedIngredients);
+      onLoadIngredients(searchedIngredients);
     }
     fetchData();
   }, [searchState, onLoadIngredients]);

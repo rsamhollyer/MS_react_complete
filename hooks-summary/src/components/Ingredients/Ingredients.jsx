@@ -1,9 +1,5 @@
-import { useEffect, useState } from 'react';
-import {
-  fetchGetIngred,
-  fetchPostIngreds,
-  URLString,
-} from '../../api/ingredients';
+import { useCallback, useState } from 'react';
+import { fetchPostIngreds, URLString } from '../../api/ingredients';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
@@ -21,16 +17,8 @@ function Ingredients() {
     setIngredients(prevState => prevState.filter(ingred => ingred.id !== igID));
   };
 
-  const filterIngredHandler = filteredIngred => {
+  const filterIngredHandler = useCallback(filteredIngred => {
     setIngredients(filteredIngred);
-  };
-
-  useEffect(() => {
-    async function fetchData() {
-      const allIngreds = await fetchGetIngred(URLString);
-      setIngredients(allIngreds);
-    }
-    fetchData();
   }, []);
 
   return (
