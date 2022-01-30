@@ -1,5 +1,9 @@
 import { useCallback, useState } from 'react';
-import { fetchPostIngreds, URLString } from '../../api/ingredients';
+import {
+  fetchDeleteIngred,
+  fetchPostIngreds,
+  URLString,
+} from '../../api/ingredients';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
@@ -13,8 +17,9 @@ function Ingredients() {
     setIngredients(prevState => [...prevState, { id, ...newIngredient }]);
   };
 
-  const removeIngredientHandler = igID => {
+  const removeIngredientHandler = async igID => {
     setIngredients(prevState => prevState.filter(ingred => ingred.id !== igID));
+    await fetchDeleteIngred(URLString, igID);
   };
 
   const filterIngredHandler = useCallback(filteredIngred => {

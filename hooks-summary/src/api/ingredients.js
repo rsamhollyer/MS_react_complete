@@ -1,8 +1,8 @@
 export const URLString =
-  'https://auth-312de-default-rtdb.firebaseio.com/ingredients.json';
+  'https://auth-312de-default-rtdb.firebaseio.com/ingredients';
 
 export async function fetchPostIngreds(url, bodyString) {
-  const res = await fetch(url, {
+  const res = await fetch(`${url}.json`, {
     method: 'POST',
     body: JSON.stringify(bodyString),
     headers: { 'Content-Type': 'application/json' },
@@ -12,7 +12,7 @@ export async function fetchPostIngreds(url, bodyString) {
 }
 
 export async function fetchGetIngred(url) {
-  const res = await fetch(url);
+  const res = await fetch(`${url}.json`);
   const response = await res.json();
   const ingredData = [];
   for (const key of Object.keys(response)) {
@@ -23,4 +23,13 @@ export async function fetchGetIngred(url) {
     });
   }
   return ingredData;
+}
+
+export async function fetchDeleteIngred(url, deleteId) {
+  const query = `/${deleteId}.json`;
+  const res = await fetch(`${url}${query}`, {
+    method: 'DELETE',
+  });
+  const response = await res.json();
+  return response;
 }
