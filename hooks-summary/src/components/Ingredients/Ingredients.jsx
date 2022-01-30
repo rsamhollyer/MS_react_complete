@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useReducer, useState } from 'react';
 import {
   fetchDeleteIngred,
   fetchPostIngreds,
@@ -9,8 +9,21 @@ import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
 
+const ingredientReducer = (ingState, action) => {
+  const actionTypes = {
+    SET: () => action.newIngreds,
+    ADD: () => [...ingState, action.ingred],
+    DELETE: () => ingState.filter(ing => ing.id !== action.id),
+    undefined: () => {
+      throw new Error(`Invalid type ${action.type}`);
+    },
+  };
+  return actionTypes[action.type]();
+};
+
 function Ingredients() {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, dispatch] = useReducer(ingredientReducer, []);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -26,7 +39,7 @@ function Ingredients() {
       setError('Something went wrong');
     });
     const id = getFirebaseId.name;
-    setIngredients(prevState => [...prevState, { id, ...newIngredient }]);
+    dispatch({ type: 'ADD', ingred: { id, ...newIngredient } });
 
     setIsLoading(false);
   };
@@ -35,11 +48,7 @@ function Ingredients() {
     setIsLoading(true);
 
     await fetchDeleteIngred(URLString, igID)
-      .then(() =>
-        setIngredients(prevState =>
-          prevState.filter(ingred => ingred.id !== igID)
-        )
-      )
+      .then(() => dispatch({ type: 'DELETE', id: igID }))
       .catch(err => {
         console.error(err);
         setIsLoading(false);
@@ -50,7 +59,8 @@ function Ingredients() {
   };
 
   const filterIngredHandler = useCallback(filteredIngred => {
-    setIngredients(filteredIngred);
+    // setIngredients(filteredIngred);
+    dispatch({ type: 'SET', newIngreds: filteredIngred });
   }, []);
 
   const closeErrorModalHandler = () => {
