@@ -26,7 +26,7 @@ const Search = React.memo(({ onLoadIngredients }) => {
     }, 600);
 
     return () => {
-      clearInterval(debouce);
+      clearTimeout(debouce);
     };
   }, [searchState, onLoadIngredients, searchRef]);
 
