@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useState } from 'react';
+import { useCallback, useReducer } from 'react';
 import {
   fetchDeleteIngred,
   fetchPostIngreds,
@@ -21,41 +21,56 @@ const ingredientReducer = (ingState, action) => {
   return actionTypes[action.type]();
 };
 
+const httpReducer = (httpState, action) => {
+  const actionTypes = {
+    SEND: () => ({ load: true, err: false }),
+    RESPONSE: () => ({ ...httpState, load: false }),
+    ERROR: () => ({ load: false, err: 'Something went wrong' }),
+    CLEAR: () => ({ ...httpState, err: false }),
+    undefined: () => {
+      throw new Error(`Invalid type ${action.type}`);
+    },
+  };
+  return actionTypes[action.type]();
+};
+
 function Ingredients() {
   const [ingredients, dispatch] = useReducer(ingredientReducer, []);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [{ load: isLoading, err: error }, dispatchHttp] = useReducer(
+    httpReducer,
+    {
+      load: false,
+      err: false,
+    }
+  );
 
   const addIngredientHandler = async newIngredient => {
-    setIsLoading(true);
+    dispatchHttp({ type: 'SEND' });
 
     const getFirebaseId = await fetchPostIngreds(
       URLString,
       newIngredient
     ).catch(err => {
       console.error(err);
-      setIsLoading(false);
-      setError('Something went wrong');
+      dispatchHttp({ type: 'ERROR' });
     });
     const id = getFirebaseId.name;
     dispatch({ type: 'ADD', ingred: { id, ...newIngredient } });
 
-    setIsLoading(false);
+    dispatchHttp({ type: 'RESPONSE' });
   };
 
   const removeIngredientHandler = async igID => {
-    setIsLoading(true);
+    dispatchHttp({ type: 'SEND' });
 
     await fetchDeleteIngred(URLString, igID)
       .then(() => dispatch({ type: 'DELETE', id: igID }))
       .catch(err => {
         console.error(err);
-        setIsLoading(false);
-        setError('Something went wrong');
+        dispatchHttp({ type: 'ERROR' });
       });
 
-    setIsLoading(false);
+    dispatchHttp({ type: 'RESPONSE' });
   };
 
   const filterIngredHandler = useCallback(filteredIngred => {
@@ -64,7 +79,7 @@ function Ingredients() {
   }, []);
 
   const closeErrorModalHandler = () => {
-    setError('');
+    dispatchHttp({ type: 'CLEAR' });
   };
 
   return (
