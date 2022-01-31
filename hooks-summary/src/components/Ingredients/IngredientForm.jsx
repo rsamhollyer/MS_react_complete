@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 
 import Card from '../UI/Card';
 import LoadingIndicator from '../UI/LoadingIndicator';
 import './IngredientForm.css';
 
 const IngredientForm = React.memo(({ onAddIngredient, isLoading }) => {
-  const [titleState, setTitleState] = useState('');
-  const [amountState, setAmountState] = useState('');
-
+  const titleState = useRef('');
+  const amountState = useRef('');
+  console.log(amountState);
   const submitHandler = e => {
     e.preventDefault();
-    onAddIngredient({ title: titleState, amount: amountState });
-  };
 
-  const inputSettingFunction = (e, setState) => {
-    const { value } = e.target;
-    setState(value);
+    let { value: titleValue } = titleState.current;
+    let { value: amountValue } = amountState.current;
+
+    onAddIngredient({
+      title: titleValue,
+      amount: amountValue,
+    });
+    if (titleValue && amountValue) {
+      titleState.current.value = '';
+      amountState.current.value = '';
+    }
   };
 
   return (
@@ -24,21 +30,11 @@ const IngredientForm = React.memo(({ onAddIngredient, isLoading }) => {
         <form onSubmit={submitHandler}>
           <div className="form-control">
             <label htmlFor="title">Name</label>
-            <input
-              type="text"
-              id="title"
-              value={titleState}
-              onChange={e => inputSettingFunction(e, setTitleState)}
-            />
+            <input type="text" id="title" ref={titleState} />
           </div>
           <div className="form-control">
             <label htmlFor="amount">Amount</label>
-            <input
-              type="number"
-              id="amount"
-              value={amountState}
-              onChange={e => inputSettingFunction(e, setAmountState)}
-            />
+            <input type="number" id="amount" ref={amountState} />
           </div>
           <div className="ingredient-form__actions">
             <button type="submit">Add Ingredient</button>
