@@ -7,7 +7,6 @@ import './IngredientForm.css';
 const IngredientForm = React.memo(({ onAddIngredient, isLoading }) => {
   const titleState = useRef('');
   const amountState = useRef('');
-  console.log(amountState);
   const submitHandler = e => {
     e.preventDefault();
 

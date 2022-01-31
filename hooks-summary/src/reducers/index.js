@@ -12,9 +12,13 @@ export const ingredientReducer = (ingredientState, action) => {
 
 export const httpReducer = (httpState, action) => {
   const actionTypes = {
-    SEND: () => ({ isLoading: true, error: false }),
-    RESPONSE: () => ({ ...httpState, isLoading: false }),
-    ERROR: () => ({ isLoading: false, error: 'Something went wrong' }),
+    SEND: () => ({ isLoading: true, error: false, data: null }),
+    RESPONSE: () => ({ ...httpState, isLoading: false, data: action.data }),
+    ERROR: () => ({
+      isLoading: false,
+      error: 'Something went wrong',
+      data: null,
+    }),
     CLEAR: () => ({ ...httpState, error: false }),
     undefined: () => {
       throw new Error(`Invalid type ${action.type}`);
@@ -26,4 +30,5 @@ export const httpReducer = (httpState, action) => {
 export const httpInitialState = {
   isLoading: false,
   error: false,
+  data: null,
 };

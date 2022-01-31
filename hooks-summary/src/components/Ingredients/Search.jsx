@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { fetchGetIngred, URLString } from '../../api/ingredients';
+// import { fetchGetIngred, URLString } from '../../api/ingredients';
 
 import Card from '../UI/Card';
 import './Search.css';

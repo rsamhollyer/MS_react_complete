@@ -1,27 +1,15 @@
 import { useCallback, useMemo, useReducer } from 'react';
-import {
-  fetchDeleteIngred,
-  fetchPostIngreds,
-  URLString,
-} from '../../api/ingredients';
 import ErrorModal from '../UI/ErrorModal';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
 
-import {
-  ingredientReducer,
-  httpReducer,
-  httpInitialState,
-} from '../../reducers';
+import { ingredientReducer } from '../../reducers';
+import { URLString, useHttp } from '../../hooks/useHttp';
 
 function Ingredients() {
   const [ingredients, dispatch] = useReducer(ingredientReducer, []);
-  const [{ isLoading, error }, dispatchHttp] = useReducer(
-    httpReducer,
-    httpInitialState
-  );
-
+  const { isLoading, error, data, sendRequest } = useHttp();
   const addIngredientHandler = useCallback(async newIngredient => {
     dispatchHttp({ type: 'SEND' });
 
@@ -38,18 +26,12 @@ function Ingredients() {
     dispatchHttp({ type: 'RESPONSE' });
   }, []);
 
-  const removeIngredientHandler = useCallback(async igID => {
-    dispatchHttp({ type: 'SEND' });
-
-    await fetchDeleteIngred(URLString, igID)
-      .then(() => dispatch({ type: 'DELETE', id: igID }))
-      .catch(err => {
-        console.error(err);
-        dispatchHttp({ type: 'ERROR' });
-      });
-
-    dispatchHttp({ type: 'RESPONSE' });
-  }, []);
+  const removeIngredientHandler = useCallback(
+    igID => {
+      sendRequest(`${URLString}/${igID}.json`, 'DELETE');
+    },
+    [sendRequest]
+  );
 
   const filterIngredHandler = useCallback(filteredIngred => {
     dispatch({ type: 'SET', newIngreds: filteredIngred });
@@ -80,10 +62,7 @@ function Ingredients() {
       />
       <section>
         <Search onLoadIngredients={filterIngredHandler} />
-        {/* <IngredientList
-          ingredients={ingredients}
-          onRemoveItem={removeIngredientHandler}
-        /> */}
+
         {memoIngList}
       </section>
     </div>
