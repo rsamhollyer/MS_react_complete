@@ -9,39 +9,17 @@ import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
 
-const ingredientReducer = (ingState, action) => {
-  const actionTypes = {
-    SET: () => action.newIngreds,
-    ADD: () => [...ingState, action.ingred],
-    DELETE: () => ingState.filter(ing => ing.id !== action.id),
-    undefined: () => {
-      throw new Error(`Invalid type ${action.type}`);
-    },
-  };
-  return actionTypes[action.type]();
-};
-
-const httpReducer = (httpState, action) => {
-  const actionTypes = {
-    SEND: () => ({ load: true, err: false }),
-    RESPONSE: () => ({ ...httpState, load: false }),
-    ERROR: () => ({ load: false, err: 'Something went wrong' }),
-    CLEAR: () => ({ ...httpState, err: false }),
-    undefined: () => {
-      throw new Error(`Invalid type ${action.type}`);
-    },
-  };
-  return actionTypes[action.type]();
-};
+import {
+  ingredientReducer,
+  httpReducer,
+  httpInitialState,
+} from '../../reducers';
 
 function Ingredients() {
   const [ingredients, dispatch] = useReducer(ingredientReducer, []);
-  const [{ load: isLoading, err: error }, dispatchHttp] = useReducer(
+  const [{ isLoading, error }, dispatchHttp] = useReducer(
     httpReducer,
-    {
-      load: false,
-      err: false,
-    }
+    httpInitialState
   );
 
   const addIngredientHandler = async newIngredient => {
@@ -74,7 +52,6 @@ function Ingredients() {
   };
 
   const filterIngredHandler = useCallback(filteredIngred => {
-    // setIngredients(filteredIngred);
     dispatch({ type: 'SET', newIngreds: filteredIngred });
   }, []);
 
