@@ -3,19 +3,24 @@
 import { memo } from 'react';
 import './IngredientList.css';
 
-const IngredientList = memo(({ onRemoveItem, ingredients }) => (
-  <section className="ingredient-list">
-    <h2>Loaded Ingredients</h2>
-    <ul>
-      {ingredients.map(ig => (
-        <li key={ig.id} onClick={() => onRemoveItem(ig.id)}>
-          <span>{ig.title}</span>
-          <span>{ig.amount}x</span>
-        </li>
-      ))}
-    </ul>
-  </section>
-));
+const IngredientList = memo(({ onRemoveItem, ingredients }) => {
+  console.log('RENDERING INGREDIENTLIST');
+  console.log({ onRemoveItem, ingredients });
+
+  return (
+    <section className="ingredient-list">
+      <h2>Loaded Ingredients</h2>
+      <ul>
+        {ingredients.map(ig => (
+          <li key={ig.id} onClick={() => onRemoveItem(ig.id)}>
+            <span>{ig.title}</span>
+            <span>{ig.amount}x</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+});
 
 IngredientList.displayName = 'Ingredient List';
 export default IngredientList;

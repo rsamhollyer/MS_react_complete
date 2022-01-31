@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import { fetchGetIngred, URLString } from '../../api/ingredients';
-
+import { useHttp, URLString } from '../../hooks/useHttp';
 import Card from '../UI/Card';
+import ErrorModal from '../UI/ErrorModal';
 import './Search.css';
 
 const Search = React.memo(({ onLoadIngredients }) => {
   const [searchState, setSearchState] = useState('');
   const searchRef = useRef();
+  const { isLoading, error, data, sendRequest, clear } = useHttp();
 
   useEffect(() => {
     const query =
@@ -14,27 +15,38 @@ const Search = React.memo(({ onLoadIngredients }) => {
         ? ''
         : `?orderBy="title"&equalTo="${searchState}"`;
 
-    async function fetchData(queryString) {
-      const searchedIngredients = await fetchGetIngred(URLString + queryString);
-      onLoadIngredients(searchedIngredients);
-    }
-
     const debouce = setTimeout(() => {
       if (searchState === searchRef.current.value) {
-        fetchData(query);
+        sendRequest(`${URLString}.json${query}`);
       }
     }, 600);
 
     return () => {
       clearTimeout(debouce);
     };
-  }, [searchState, onLoadIngredients, searchRef]);
+  }, [sendRequest, searchState, searchRef]);
+
+  useEffect(() => {
+    if (data && !isLoading && !error) {
+      const loadedIngredients = [];
+      for (const [key, value] of Object.entries(data)) {
+        loadedIngredients.push({
+          id: key,
+          title: value.title,
+          amount: value.amount,
+        });
+      }
+      onLoadIngredients(loadedIngredients);
+    }
+  }, [data, isLoading, error, onLoadIngredients]);
 
   return (
     <section className="search">
+      {error && <ErrorModal onClose={clear}>{error}</ErrorModal>}
       <Card>
         <div className="search-input">
           <label htmlFor="title">Filter by Title</label>
+          {isLoading && <span>LOADING...</span>}
           <input
             ref={searchRef}
             id="title"

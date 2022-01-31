@@ -1,34 +1,47 @@
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 import ErrorModal from '../UI/ErrorModal';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
-
 import { ingredientReducer } from '../../reducers';
 import { URLString, useHttp } from '../../hooks/useHttp';
 
 function Ingredients() {
   const [ingredients, dispatch] = useReducer(ingredientReducer, []);
-  const { isLoading, error, data, sendRequest } = useHttp();
-  const addIngredientHandler = useCallback(async newIngredient => {
-    dispatchHttp({ type: 'SEND' });
+  const { isLoading, error, data, extra, identifier, sendRequest, clear } =
+    useHttp();
 
-    const getFirebaseId = await fetchPostIngreds(
-      URLString,
-      newIngredient
-    ).catch(err => {
-      console.error(err);
-      dispatchHttp({ type: 'ERROR' });
-    });
-    const id = getFirebaseId.name;
-    dispatch({ type: 'ADD', ingred: { id, ...newIngredient } });
+  useEffect(() => {
+    console.log({ data, extra });
+    if (!isLoading && !error && identifier === 'DELETE_REQ') {
+      dispatch({ type: 'DELETE', id: data.extra });
+    } else if (!isLoading && data && !error && identifier === 'POST_REQ') {
+      dispatch({ type: 'ADD', ingred: { id: data.name, ...extra } });
+    }
+  }, [data, extra, error, identifier, isLoading]);
 
-    dispatchHttp({ type: 'RESPONSE' });
-  }, []);
+  const addIngredientHandler = useCallback(
+    newIngredient => {
+      sendRequest(
+        `${URLString}.json`,
+        'POST',
+        JSON.stringify(newIngredient),
+        newIngredient,
+        'POST_REQ'
+      );
+    },
+    [sendRequest]
+  );
 
   const removeIngredientHandler = useCallback(
     igID => {
-      sendRequest(`${URLString}/${igID}.json`, 'DELETE');
+      sendRequest(
+        `${URLString}/${igID}.json`,
+        'DELETE',
+        null,
+        igID,
+        'DELETE_REQ'
+      );
     },
     [sendRequest]
   );
@@ -37,25 +50,9 @@ function Ingredients() {
     dispatch({ type: 'SET', newIngreds: filteredIngred });
   }, []);
 
-  const closeErrorModalHandler = useCallback(() => {
-    dispatchHttp({ type: 'CLEAR' });
-  }, []);
-
-  const memoIngList = useMemo(
-    () => (
-      <IngredientList
-        ingredients={ingredients}
-        onRemoveItem={removeIngredientHandler}
-      />
-    ),
-    [ingredients, removeIngredientHandler]
-  );
-
   return (
     <div className="App">
-      {error && (
-        <ErrorModal onClose={closeErrorModalHandler}>{error}</ErrorModal>
-      )}
+      {error && <ErrorModal onClose={clear}>{error}</ErrorModal>}
       <IngredientForm
         isLoading={isLoading}
         onAddIngredient={addIngredientHandler}
@@ -63,7 +60,10 @@ function Ingredients() {
       <section>
         <Search onLoadIngredients={filterIngredHandler} />
 
-        {memoIngList}
+        <IngredientList
+          ingredients={ingredients}
+          onRemoveItem={removeIngredientHandler}
+        />
       </section>
     </div>
   );
