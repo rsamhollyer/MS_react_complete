@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { memo } from 'react';
 import './IngredientList.css';
 
-const IngredientList = ({ onRemoveItem, ingredients }) => (
+const IngredientList = memo(({ onRemoveItem, ingredients }) => (
   <section className="ingredient-list">
     <h2>Loaded Ingredients</h2>
     <ul>
@@ -14,6 +15,7 @@ const IngredientList = ({ onRemoveItem, ingredients }) => (
       ))}
     </ul>
   </section>
-);
+));
 
+IngredientList.displayName = 'Ingredient List';
 export default IngredientList;

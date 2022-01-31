@@ -1,4 +1,4 @@
-import { useCallback, useReducer } from 'react';
+import { useCallback, useMemo, useReducer } from 'react';
 import {
   fetchDeleteIngred,
   fetchPostIngreds,
@@ -22,7 +22,7 @@ function Ingredients() {
     httpInitialState
   );
 
-  const addIngredientHandler = async newIngredient => {
+  const addIngredientHandler = useCallback(async newIngredient => {
     dispatchHttp({ type: 'SEND' });
 
     const getFirebaseId = await fetchPostIngreds(
@@ -36,9 +36,9 @@ function Ingredients() {
     dispatch({ type: 'ADD', ingred: { id, ...newIngredient } });
 
     dispatchHttp({ type: 'RESPONSE' });
-  };
+  }, []);
 
-  const removeIngredientHandler = async igID => {
+  const removeIngredientHandler = useCallback(async igID => {
     dispatchHttp({ type: 'SEND' });
 
     await fetchDeleteIngred(URLString, igID)
@@ -49,15 +49,25 @@ function Ingredients() {
       });
 
     dispatchHttp({ type: 'RESPONSE' });
-  };
+  }, []);
 
   const filterIngredHandler = useCallback(filteredIngred => {
     dispatch({ type: 'SET', newIngreds: filteredIngred });
   }, []);
 
-  const closeErrorModalHandler = () => {
+  const closeErrorModalHandler = useCallback(() => {
     dispatchHttp({ type: 'CLEAR' });
-  };
+  }, []);
+
+  const memoIngList = useMemo(
+    () => (
+      <IngredientList
+        ingredients={ingredients}
+        onRemoveItem={removeIngredientHandler}
+      />
+    ),
+    [ingredients, removeIngredientHandler]
+  );
 
   return (
     <div className="App">
@@ -70,10 +80,11 @@ function Ingredients() {
       />
       <section>
         <Search onLoadIngredients={filterIngredHandler} />
-        <IngredientList
+        {/* <IngredientList
           ingredients={ingredients}
           onRemoveItem={removeIngredientHandler}
-        />
+        /> */}
+        {memoIngList}
       </section>
     </div>
   );
